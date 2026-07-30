@@ -24,3 +24,6 @@ jobs:
             **/.git*/**
             **/.github/**
             schema.sql
+            blog.php
+            blog-post.php
+            includes/db.php
