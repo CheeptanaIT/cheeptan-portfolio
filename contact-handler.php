@@ -69,12 +69,43 @@ $body .= "Message:\n{$message}\n";
 $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 
-$headers = [];
-$headers[] = 'From: ' . $fromAddress;
-$headers[] = 'Reply-To: ' . $email;
-$headers[] = 'X-Mailer: PHP/' . phpversion();
+$smtpHost = getenv('SMTP_HOST');
 
-$sent = @mail($to, $subject, $body, implode("\r\n", $headers));
+if ($smtpHost) {
+    // ใช้ SMTP จริง (เช่น Brevo) เมื่อตั้งค่า env ไว้ — จำเป็นบน host ที่ไม่มี mail() ในตัว
+    require __DIR__ . '/includes/PHPMailer/Exception.php';
+    require __DIR__ . '/includes/PHPMailer/PHPMailer.php';
+    require __DIR__ . '/includes/PHPMailer/SMTP.php';
+
+    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = $smtpHost;
+        $mail->Port = (int) (getenv('SMTP_PORT') ?: 587);
+        $mail->SMTPAuth = true;
+        $mail->Username = getenv('SMTP_USER') ?: '';
+        $mail->Password = getenv('SMTP_PASS') ?: '';
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->CharSet = 'UTF-8';
+
+        $mail->setFrom($fromAddress, $data['site_name']);
+        $mail->addAddress($to);
+        $mail->addReplyTo($email, $name);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+
+        $sent = $mail->send();
+    } catch (Exception $e) {
+        $sent = false;
+    }
+} else {
+    $headers = [];
+    $headers[] = 'From: ' . $fromAddress;
+    $headers[] = 'Reply-To: ' . $email;
+    $headers[] = 'X-Mailer: PHP/' . phpversion();
+
+    $sent = @mail($to, $subject, $body, implode("\r\n", $headers));
+}
 
 if ($sent) {
     echo json_encode(['success' => true, 'message' => $m['success']]);
