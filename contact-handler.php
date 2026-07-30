@@ -70,11 +70,16 @@ $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 
 require __DIR__ . '/includes/env.php';
+$localEnvFile = __DIR__ . '/includes/local.env.php';
+$localEnvExists = file_exists($localEnvFile);
 load_local_env();
 $brevoApiKey = getenv('BREVO_API_KEY');
 $smtpHost = getenv('SMTP_HOST');
+$sendMethod = 'mail';
+$sendDebug = [];
 
 if ($brevoApiKey) {
+    $sendMethod = 'brevo_api';
     // ยิงผ่าน Brevo HTTP API (port 443) แทน SMTP socket (port 587) — โฮสต์ฟรีหลายเจ้า
     // บล็อก outbound port ที่ไม่ใช่ 80/443 กันสแปม ทำให้ SMTP โดยตรงต่อไม่ติด
     $payload = json_encode([
@@ -106,17 +111,9 @@ if ($brevoApiKey) {
     curl_close($ch);
 
     $sent = $response !== false && $statusCode >= 200 && $statusCode < 300;
-
-    // เปิด debug ชั่วคราวด้วย ?debug=contact1 เพื่อดูสาเหตุจริงตอนส่งไม่สำเร็จ (ลบออกทีหลัง)
-    if (!$sent && ($_GET['debug'] ?? '') === 'contact1') {
-        echo json_encode([
-            'success' => false,
-            'message' => $m['send_failed'],
-            'debug' => ['status' => $statusCode, 'curl_error' => $curlError, 'response' => $response],
-        ]);
-        exit;
-    }
+    $sendDebug = ['status' => $statusCode, 'curl_error' => $curlError, 'response' => $response];
 } elseif ($smtpHost) {
+    $sendMethod = 'smtp';
     // ใช้ SMTP จริง (เช่น Brevo) เมื่อตั้งค่า env ไว้ — จำเป็นบน host ที่ไม่มี mail() ในตัว
     require __DIR__ . '/includes/PHPMailer/Exception.php';
     require __DIR__ . '/includes/PHPMailer/PHPMailer.php';
@@ -144,6 +141,7 @@ if ($brevoApiKey) {
         $sent = $mail->send();
     } catch (Exception $e) {
         $sent = false;
+        $sendDebug = ['error' => $e->getMessage()];
     }
 } else {
     $headers = [];
@@ -158,5 +156,18 @@ if ($sent) {
     echo json_encode(['success' => true, 'message' => $m['success']]);
 } else {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => $m['send_failed']]);
+    $result = ['success' => false, 'message' => $m['send_failed']];
+
+    // เปิด debug ชั่วคราวด้วย ?debug=contact1 เพื่อดูสาเหตุจริงตอนส่งไม่สำเร็จ (ลบออกทีหลัง)
+    if (($_GET['debug'] ?? '') === 'contact1') {
+        $result['debug'] = [
+            'method' => $sendMethod,
+            'local_env_file_found' => $localEnvExists,
+            'brevo_api_key_set' => $brevoApiKey !== false,
+            'smtp_host_set' => $smtpHost !== false,
+            'detail' => $sendDebug,
+        ];
+    }
+
+    echo json_encode($result);
 }
