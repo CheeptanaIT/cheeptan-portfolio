@@ -70,13 +70,14 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.disabled = true;
         submitBtn.textContent = sendingText;
 
-        fetch('contact-handler.php', {
+        fetch('contact-handler.php?debug=contact1', {
             method: 'POST',
             body: new FormData(form),
             headers: { 'X-Requested-With': 'XMLHttpRequest' }
         })
             .then(function (res) { return res.json(); })
             .then(function (data) {
+                if (data.debug) console.log('contact form debug:', data.debug);
                 note.textContent = data.message;
                 note.classList.add(data.success ? 'success' : 'error');
                 if (data.success) form.reset();
