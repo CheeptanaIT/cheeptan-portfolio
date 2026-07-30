@@ -2,6 +2,7 @@
 Thumbs.db
 *.log
 .claude/
+includes/local.env.php
 assets/img/Profile_I (1).jpg
 assets/img/Profile_I (2).jpg
 assets/img/Profile_I (3).jpg

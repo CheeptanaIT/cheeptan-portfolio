@@ -69,6 +69,8 @@ $body .= "Message:\n{$message}\n";
 $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 
+require __DIR__ . '/includes/env.php';
+load_local_env();
 $smtpHost = getenv('SMTP_HOST');
 
 if ($smtpHost) {
