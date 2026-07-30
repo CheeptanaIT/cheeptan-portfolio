@@ -88,7 +88,9 @@ if ($smtpHost) {
         $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
         $mail->CharSet = 'UTF-8';
 
-        $mail->setFrom($fromAddress, $data['site_name']);
+        // Brevo (และผู้ให้บริการ SMTP ส่วนใหญ่) ปฏิเสธอีเมลที่ From เป็นที่อยู่ที่ยังไม่ได้ verify
+        // ตั้ง SMTP_FROM_EMAIL เป็นอีเมลที่ verify ไว้ใน Brevo แล้ว ไม่งั้นจะ fallback ไปใช้ no-reply@โดเมน
+        $mail->setFrom(getenv('SMTP_FROM_EMAIL') ?: $fromAddress, $data['site_name']);
         $mail->addAddress($to);
         $mail->addReplyTo($email, $name);
         $mail->Subject = $subject;
