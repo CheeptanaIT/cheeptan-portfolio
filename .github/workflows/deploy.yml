@@ -12,6 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Write includes/local.env.php from secrets
+        run: |
+          cat > includes/local.env.php << 'PHP'
+          <?php
+          putenv('BREVO_API_KEY=${{ secrets.BREVO_API_KEY }}');
+          putenv('SMTP_FROM_EMAIL=${{ secrets.SMTP_FROM_EMAIL }}');
+          PHP
+
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
