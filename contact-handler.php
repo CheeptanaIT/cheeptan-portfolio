@@ -102,9 +102,20 @@ if ($brevoApiKey) {
     ]);
     $response = curl_exec($ch);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
     curl_close($ch);
 
     $sent = $response !== false && $statusCode >= 200 && $statusCode < 300;
+
+    // เปิด debug ชั่วคราวด้วย ?debug=contact1 เพื่อดูสาเหตุจริงตอนส่งไม่สำเร็จ (ลบออกทีหลัง)
+    if (!$sent && ($_GET['debug'] ?? '') === 'contact1') {
+        echo json_encode([
+            'success' => false,
+            'message' => $m['send_failed'],
+            'debug' => ['status' => $statusCode, 'curl_error' => $curlError, 'response' => $response],
+        ]);
+        exit;
+    }
 } elseif ($smtpHost) {
     // ใช้ SMTP จริง (เช่น Brevo) เมื่อตั้งค่า env ไว้ — จำเป็นบน host ที่ไม่มี mail() ในตัว
     require __DIR__ . '/includes/PHPMailer/Exception.php';
