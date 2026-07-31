@@ -24,6 +24,10 @@ jobs:
               'SMTP_USER' => '${{ secrets.SMTP_USER }}',
               'SMTP_PASS' => '${{ secrets.SMTP_PASS }}',
               'SMTP_FROM_EMAIL' => '${{ secrets.SMTP_FROM_EMAIL }}',
+              'DB_HOST' => '${{ secrets.DB_HOST }}',
+              'DB_NAME' => '${{ secrets.DB_NAME }}',
+              'DB_USER' => '${{ secrets.DB_USER }}',
+              'DB_PASS' => '${{ secrets.DB_PASS }}',
           ];
           PHP
 
@@ -40,6 +44,3 @@ jobs:
             **/.git*/**
             **/.github/**
             schema.sql
-            blog.php
-            blog-post.php
-            includes/db.php
