@@ -79,6 +79,9 @@ $debugLog = [
     'local_env_found' => $localEnvFound,
     'brevo_api_key_set' => $brevoApiKey !== false,
     'smtp_host_set' => $smtpHost !== false,
+    'putenv_exists' => function_exists('putenv'),
+    'disable_functions' => ini_get('disable_functions'),
+    'php_version' => phpversion(),
 ];
 
 if ($brevoApiKey) {
