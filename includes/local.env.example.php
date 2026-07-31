@@ -9,12 +9,7 @@
  * รูปแบบ return array แทนการเรียก putenv() ตรงๆ)
  */
 return [
-    // วิธีส่งอีเมล — เลือกอย่างใดอย่างหนึ่ง
-
-    // ตัวเลือก 1: Brevo HTTP API (แนะนำถ้า host บล็อก SMTP port 587)
-    // 'BREVO_API_KEY' => 'your-brevo-api-key',
-
-    // ตัวเลือก 2: SMTP ตรง (ใช้ได้ถ้า host ไม่บล็อก port 587)
+    // ค่าสำหรับส่งอีเมลผ่าน SMTP (เช่น Brevo)
     'SMTP_HOST' => 'smtp-relay.brevo.com',
     'SMTP_PORT' => '587',
     'SMTP_USER' => 'your-brevo-login-email@example.com',

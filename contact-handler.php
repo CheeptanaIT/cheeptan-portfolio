@@ -70,41 +70,9 @@ $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 
 require __DIR__ . '/includes/env.php';
-$brevoApiKey = env_get('BREVO_API_KEY');
 $smtpHost = env_get('SMTP_HOST');
 
-if ($brevoApiKey) {
-    // ยิงผ่าน Brevo HTTP API (port 443) แทน SMTP socket (port 587) — โฮสต์ฟรีหลายเจ้า
-    // บล็อก outbound port ที่ไม่ใช่ 80/443 กันสแปม ทำให้ SMTP โดยตรงต่อไม่ติด
-    $payload = json_encode([
-        'sender' => [
-            'name' => $data['site_name'],
-            'email' => env_get('SMTP_FROM_EMAIL') ?: $fromAddress,
-        ],
-        'to' => [['email' => $to]],
-        'replyTo' => ['email' => $email, 'name' => $name],
-        'subject' => $subject,
-        'textContent' => $body,
-    ]);
-
-    $ch = curl_init('https://api.brevo.com/v3/smtp/email');
-    curl_setopt_array($ch, [
-        CURLOPT_POST => true,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 15,
-        CURLOPT_HTTPHEADER => [
-            'accept: application/json',
-            'content-type: application/json',
-            'api-key: ' . $brevoApiKey,
-        ],
-        CURLOPT_POSTFIELDS => $payload,
-    ]);
-    $response = curl_exec($ch);
-    $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    $sent = $response !== false && $statusCode >= 200 && $statusCode < 300;
-} elseif ($smtpHost) {
+if ($smtpHost) {
     // ใช้ SMTP จริง (เช่น Brevo) เมื่อตั้งค่า env ไว้ — จำเป็นบน host ที่ไม่มี mail() ในตัว
     require __DIR__ . '/includes/PHPMailer/Exception.php';
     require __DIR__ . '/includes/PHPMailer/PHPMailer.php';
