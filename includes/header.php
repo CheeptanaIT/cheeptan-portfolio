@@ -17,10 +17,10 @@
             <li><a href="index.php#about"><?= htmlspecialchars($ui['nav_about']) ?></a></li>
             <li><a href="index.php#competencies"><?= htmlspecialchars($ui['nav_competencies']) ?></a></li>
             <li><a href="index.php#achievements"><?= htmlspecialchars($ui['nav_achievements']) ?></a></li>
-            <?php /* hidden for now: portfolio.php / blog.php nav links
+            <?php /* hidden for now: portfolio.php nav link (placeholder content)
             <li><a href="portfolio.php" class="<?= $currentPage === 'portfolio' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_portfolio']) ?></a></li>
-            <li><a href="blog.php" class="<?= $currentPage === 'blog' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_blog']) ?></a></li>
             */ ?>
+            <li><a href="blog.php" class="<?= $currentPage === 'blog' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_blog']) ?></a></li>
             <li><a href="index.php#contact"><?= htmlspecialchars($ui['nav_contact']) ?></a></li>
             <li class="nav-lang-switch">
                 <a href="?lang=th" class="<?= $lang === 'th' ? 'is-active' : '' ?>">TH</a>

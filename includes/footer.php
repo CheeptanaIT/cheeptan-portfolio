@@ -12,10 +12,8 @@
                     <a href="index.php#about"><?= htmlspecialchars($ui['nav_about']) ?></a>
                     <a href="index.php#competencies"><?= htmlspecialchars($ui['nav_competencies']) ?></a>
                     <a href="index.php#achievements"><?= htmlspecialchars($ui['nav_achievements']) ?></a>
-                    <?php /* hidden for now: portfolio.php / blog.php nav links
-                    <a href="portfolio.php"><?= htmlspecialchars($ui['nav_portfolio']) ?></a>
+                    <?php /* hidden for now: portfolio.php nav link (placeholder content) */ ?>
                     <a href="blog.php"><?= htmlspecialchars($ui['nav_blog']) ?></a>
-                    */ ?>
                     <a href="index.php#contact"><?= htmlspecialchars($ui['nav_contact']) ?></a>
                 </nav>
             </div>

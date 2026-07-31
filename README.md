@@ -9,7 +9,7 @@ Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure &
 - Bilingual Thai / English with a persistent language switch (cookie-based)
 - Working contact form — sends via SMTP (PHPMailer) in production, falls back to `mail()` locally
 - Portfolio page for project and document case studies
-- Blog backed by MySQL (schema included, currently unlinked while hosting is finalized)
+- Blog backed by MySQL (schema included)
 - Responsive layout, reviewed against WCAG accessibility basics
 - Auto-deploys to hosting via GitHub Actions on every push to `master`
 
