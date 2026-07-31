@@ -16,11 +16,15 @@ jobs:
         run: |
           cat > includes/local.env.php << 'PHP'
           <?php
-          putenv('SMTP_HOST=${{ secrets.SMTP_HOST }}');
-          putenv('SMTP_PORT=${{ secrets.SMTP_PORT }}');
-          putenv('SMTP_USER=${{ secrets.SMTP_USER }}');
-          putenv('SMTP_PASS=${{ secrets.SMTP_PASS }}');
-          putenv('SMTP_FROM_EMAIL=${{ secrets.SMTP_FROM_EMAIL }}');
+          // putenv() ถูกปิดไว้บน InfinityFree (disable_functions) จึง return
+          // array แทนแบบนี้ — อ่านผ่าน includes/env.php's env_get()
+          return [
+              'SMTP_HOST' => '${{ secrets.SMTP_HOST }}',
+              'SMTP_PORT' => '${{ secrets.SMTP_PORT }}',
+              'SMTP_USER' => '${{ secrets.SMTP_USER }}',
+              'SMTP_PASS' => '${{ secrets.SMTP_PASS }}',
+              'SMTP_FROM_EMAIL' => '${{ secrets.SMTP_FROM_EMAIL }}',
+          ];
           PHP
 
       - name: Upload via FTP

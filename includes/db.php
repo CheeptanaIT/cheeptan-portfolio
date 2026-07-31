@@ -10,11 +10,10 @@ function get_db(): PDO
     static $pdo = null;
 
     if ($pdo === null) {
-        load_local_env();
-        $host = getenv('DB_HOST') ?: 'localhost';
-        $dbname = getenv('DB_NAME') ?: 'p1_home_blog';
-        $user = getenv('DB_USER') ?: 'root';
-        $pass = getenv('DB_PASS') ?: '';
+        $host = env_get('DB_HOST') ?: 'localhost';
+        $dbname = env_get('DB_NAME') ?: 'p1_home_blog';
+        $user = env_get('DB_USER') ?: 'root';
+        $pass = env_get('DB_PASS') ?: '';
 
         $pdo = new PDO(
             "mysql:host={$host};dbname={$dbname};charset=utf8mb4",

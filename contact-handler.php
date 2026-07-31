@@ -70,18 +70,12 @@ $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 
 require __DIR__ . '/includes/env.php';
-$localEnvFound = file_exists(__DIR__ . '/includes/local.env.php');
-load_local_env();
-$brevoApiKey = getenv('BREVO_API_KEY');
-$smtpHost = getenv('SMTP_HOST');
+$brevoApiKey = env_get('BREVO_API_KEY');
+$smtpHost = env_get('SMTP_HOST');
 $debugLog = [
     'time' => date('c'),
-    'local_env_found' => $localEnvFound,
     'brevo_api_key_set' => $brevoApiKey !== false,
     'smtp_host_set' => $smtpHost !== false,
-    'putenv_exists' => function_exists('putenv'),
-    'disable_functions' => ini_get('disable_functions'),
-    'php_version' => phpversion(),
 ];
 
 if ($brevoApiKey) {
@@ -91,7 +85,7 @@ if ($brevoApiKey) {
     $payload = json_encode([
         'sender' => [
             'name' => $data['site_name'],
-            'email' => getenv('SMTP_FROM_EMAIL') ?: $fromAddress,
+            'email' => env_get('SMTP_FROM_EMAIL') ?: $fromAddress,
         ],
         'to' => [['email' => $to]],
         'replyTo' => ['email' => $email, 'name' => $name],
@@ -131,16 +125,16 @@ if ($brevoApiKey) {
     try {
         $mail->isSMTP();
         $mail->Host = $smtpHost;
-        $mail->Port = (int) (getenv('SMTP_PORT') ?: 587);
+        $mail->Port = (int) (env_get('SMTP_PORT') ?: 587);
         $mail->SMTPAuth = true;
-        $mail->Username = getenv('SMTP_USER') ?: '';
-        $mail->Password = getenv('SMTP_PASS') ?: '';
+        $mail->Username = env_get('SMTP_USER') ?: '';
+        $mail->Password = env_get('SMTP_PASS') ?: '';
         $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
         $mail->CharSet = 'UTF-8';
 
         // Brevo (และผู้ให้บริการ SMTP ส่วนใหญ่) ปฏิเสธอีเมลที่ From เป็นที่อยู่ที่ยังไม่ได้ verify
         // ตั้ง SMTP_FROM_EMAIL เป็นอีเมลที่ verify ไว้ใน Brevo แล้ว ไม่งั้นจะ fallback ไปใช้ no-reply@โดเมน
-        $mail->setFrom(getenv('SMTP_FROM_EMAIL') ?: $fromAddress, $data['site_name']);
+        $mail->setFrom(env_get('SMTP_FROM_EMAIL') ?: $fromAddress, $data['site_name']);
         $mail->addAddress($to);
         $mail->addReplyTo($email, $name);
         $mail->Subject = $subject;
