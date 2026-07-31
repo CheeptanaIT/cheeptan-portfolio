@@ -1,0 +1,123 @@
+/* Admin panel — linked alongside style.css for shared color tokens/typography */
+
+.admin-login-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3);
+}
+
+.admin-login-card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+}
+
+.admin-login-title {
+    margin: 0 0 var(--space-3);
+    font-size: 1.3rem;
+}
+
+.admin-shell {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--space-4) var(--space-3);
+}
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.admin-title {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    flex-wrap: wrap;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    text-align: left;
+    padding: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+.admin-table th {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.admin-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.admin-badge.draft {
+    background: var(--color-bg);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+}
+
+.admin-badge.published {
+    background: var(--color-accent);
+    color: #fff;
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+}
+
+.admin-content-area {
+    min-height: 260px;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: var(--color-bg-alt);
+    color: var(--color-text);
+}
+
+.form-group select:focus {
+    outline: none;
+    background: var(--color-bg);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(162, 76, 42, 0.35);
+}
+
+@media (max-width: 720px) {
+    .admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+}

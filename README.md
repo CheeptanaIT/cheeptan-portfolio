@@ -9,7 +9,7 @@ Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure &
 - Bilingual Thai / English with a persistent language switch (cookie-based)
 - Working contact form — sends via SMTP (PHPMailer) in production, falls back to `mail()` locally
 - Portfolio page for project and document case studies
-- Blog backed by MySQL (schema included)
+- Blog backed by MySQL (schema included), with a password-protected `/admin/` panel for writing and editing posts
 - Responsive layout, reviewed against WCAG accessibility basics
 - Auto-deploys to hosting via GitHub Actions on every push to `master`
 
@@ -48,6 +48,19 @@ created first and the schema imported into it:
 mysql -u root -e "CREATE DATABASE p1_home_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
 mysql -u root p1_home_blog < schema.sql
 ```
+
+## Admin panel
+
+Blog posts are managed at `/admin/` (list, create, edit, delete — no public link, reached by
+typing the URL directly). It's protected by a single password, stored only as a hash via
+`ADMIN_PASSWORD_HASH` — never the plaintext. Generate it once with:
+
+```bash
+php -r "echo password_hash('your-password', PASSWORD_DEFAULT), PHP_EOL;"
+```
+
+Then set the resulting hash as the `ADMIN_PASSWORD_HASH` value in `includes/local.env.php`
+(local dev) or as a GitHub Secret of the same name (production).
 
 ## Deployment
 

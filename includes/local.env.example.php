@@ -18,9 +18,13 @@ return [
     // ต้อง verify อีเมลนี้ไว้ใน Brevo ก่อน ไม่งั้นจะโดนปฏิเสธการส่ง
     'SMTP_FROM_EMAIL' => 'cheeptana.boy@gmail.com',
 
-    // ค่า DB_* ยังไม่ต้องใส่ตอนนี้ (Blog/DB ยังไม่ได้เปิดใช้งานบนเว็บจริง)
+    // ค่าเชื่อมต่อฐานข้อมูล MySQL/MariaDB สำหรับ Blog
     // 'DB_HOST' => 'sql123.infinityfree.com',
     // 'DB_NAME' => 'if0_12345678_p1homeblog',
     // 'DB_USER' => 'if0_12345678',
     // 'DB_PASS' => 'your-database-password',
+
+    // รหัสผ่านเข้าหน้า admin (/admin/) — เก็บเป็น hash เท่านั้น ไม่ใช่รหัสผ่านตรงๆ
+    // สร้างด้วยคำสั่ง: php -r "echo password_hash('your-password', PASSWORD_DEFAULT), PHP_EOL;"
+    // 'ADMIN_PASSWORD_HASH' => '$2y$10$...',
 ];
