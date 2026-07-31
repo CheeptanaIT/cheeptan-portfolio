@@ -105,17 +105,13 @@ If you're about to set up new network equipment, keep a console cable close by, 
 EN;
 
 $stmt = get_db()->prepare(
-    "UPDATE blog_posts SET
-        slug = :slug,
-        title_th = :title_th,
-        title_en = :title_en,
-        excerpt_th = :excerpt_th,
-        excerpt_en = :excerpt_en,
-        content_th = :content_th,
-        content_en = :content_en,
-        status = 'published',
-        published_at = :published_at
-     WHERE slug = 'sample-fortinet-lessons-learned'"
+    "INSERT INTO blog_posts (slug, title_th, title_en, excerpt_th, excerpt_en, content_th, content_en, status, published_at)
+     VALUES (:slug, :title_th, :title_en, :excerpt_th, :excerpt_en, :content_th, :content_en, 'published', :published_at)
+     ON DUPLICATE KEY UPDATE
+        title_th = VALUES(title_th), title_en = VALUES(title_en),
+        excerpt_th = VALUES(excerpt_th), excerpt_en = VALUES(excerpt_en),
+        content_th = VALUES(content_th), content_en = VALUES(content_en),
+        status = 'published', published_at = VALUES(published_at)"
 );
 
 $stmt->execute([
@@ -129,4 +125,4 @@ $stmt->execute([
     'published_at' => date('Y-m-d H:i:s'),
 ]);
 
-echo 'Rows updated: ' . $stmt->rowCount();
+echo 'Rows affected: ' . $stmt->rowCount();
