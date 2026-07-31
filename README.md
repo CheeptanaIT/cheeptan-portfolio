@@ -41,10 +41,12 @@ schema.sql            MySQL schema + seed data for the blog
 php -S 127.0.0.1:8899
 ```
 
-The blog feature additionally needs a local MySQL/MariaDB server with the schema imported:
+The blog feature additionally needs a local MySQL/MariaDB server, with the database
+created first and the schema imported into it:
 
 ```bash
-mysql -u root < schema.sql
+mysql -u root -e "CREATE DATABASE p1_home_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+mysql -u root p1_home_blog < schema.sql
 ```
 
 ## Deployment

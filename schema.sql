@@ -1,6 +1,7 @@
-CREATE DATABASE IF NOT EXISTS p1_home_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-USE p1_home_blog;
+-- รันเข้า database ที่มีอยู่แล้ว (โฮสต์ฟรีส่วนใหญ่ไม่ให้สิทธิ์ CREATE DATABASE)
+-- ตอน dev ในเครื่อง ให้สร้าง database ก่อนแยกต่างหาก แล้วค่อย import ไฟล์นี้ เช่น:
+--   mysql -u root -e "CREATE DATABASE p1_home_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+--   mysql -u root p1_home_blog < schema.sql
 
 CREATE TABLE IF NOT EXISTS blog_posts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
