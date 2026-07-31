@@ -72,14 +72,8 @@ $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 require __DIR__ . '/includes/env.php';
 $brevoApiKey = env_get('BREVO_API_KEY');
 $smtpHost = env_get('SMTP_HOST');
-$debugLog = [
-    'time' => date('c'),
-    'brevo_api_key_set' => $brevoApiKey !== false,
-    'smtp_host_set' => $smtpHost !== false,
-];
 
 if ($brevoApiKey) {
-    $debugLog['method'] = 'brevo_api';
     // ยิงผ่าน Brevo HTTP API (port 443) แทน SMTP socket (port 587) — โฮสต์ฟรีหลายเจ้า
     // บล็อก outbound port ที่ไม่ใช่ 80/443 กันสแปม ทำให้ SMTP โดยตรงต่อไม่ติด
     $payload = json_encode([
@@ -107,15 +101,10 @@ if ($brevoApiKey) {
     ]);
     $response = curl_exec($ch);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curlError = curl_error($ch);
     curl_close($ch);
 
     $sent = $response !== false && $statusCode >= 200 && $statusCode < 300;
-    $debugLog['status'] = $statusCode;
-    $debugLog['curl_error'] = $curlError;
-    $debugLog['response'] = $response;
 } elseif ($smtpHost) {
-    $debugLog['method'] = 'smtp';
     // ใช้ SMTP จริง (เช่น Brevo) เมื่อตั้งค่า env ไว้ — จำเป็นบน host ที่ไม่มี mail() ในตัว
     require __DIR__ . '/includes/PHPMailer/Exception.php';
     require __DIR__ . '/includes/PHPMailer/PHPMailer.php';
@@ -143,10 +132,8 @@ if ($brevoApiKey) {
         $sent = $mail->send();
     } catch (Exception $e) {
         $sent = false;
-        $debugLog['error'] = $e->getMessage();
     }
 } else {
-    $debugLog['method'] = 'mail';
     $headers = [];
     $headers[] = 'From: ' . $fromAddress;
     $headers[] = 'Reply-To: ' . $email;
@@ -158,10 +145,6 @@ if ($brevoApiKey) {
 if ($sent) {
     echo json_encode(['success' => true, 'message' => $m['success']]);
 } else {
-    // เขียน log ชั่วคราวไว้ดูสาเหตุจริง (ลบออกทีหลัง) — อ่านได้ที่ /contact-debug.log
-    $debugLog['sent'] = false;
-    file_put_contents(__DIR__ . '/contact-debug.log', json_encode($debugLog) . "\n", FILE_APPEND | LOCK_EX);
-
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => $m['send_failed']]);
 }
