@@ -58,6 +58,22 @@ require __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<section id="education">
+    <div class="container">
+        <span class="section-eyebrow"><?= htmlspecialchars($ui['eyebrow_education']) ?></span>
+        <h2 class="section-title"><?= htmlspecialchars($ui['education_title']) ?></h2>
+        <div class="education-grid">
+            <?php foreach ($data['education'] as $i => $edu): ?>
+                <div class="education-card reveal" style="--reveal-delay: <?= $i * 90 ?>ms">
+                    <h3 class="education-title"><?= htmlspecialchars($edu['title']) ?></h3>
+                    <p class="education-institution"><?= htmlspecialchars($edu['institution']) ?></p>
+                    <p class="education-period"><?= htmlspecialchars($edu['period']) ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
 <section id="competencies">
     <div class="container">
         <span class="section-eyebrow"><?= htmlspecialchars($ui['eyebrow_competencies']) ?></span>

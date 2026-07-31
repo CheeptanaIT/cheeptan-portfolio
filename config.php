@@ -29,11 +29,26 @@ return [
         'about' => [
             'text' => 'IT Professional ที่มีความเชี่ยวชาญด้าน IT Infrastructure, Virtualization และ Network Security มีประสบการณ์ดูแลและบริหารจัดการระบบไอทีให้รองรับผู้ใช้งานมากกว่า 200 ราย มุ่งเน้นการออกแบบระบบที่มีความเสถียร (High Availability) การบริหารจัดการความปลอดภัยของข้อมูล และการจัดทำระบบ Backup & Recovery เพื่อให้ธุรกิจดำเนินได้อย่างต่อเนื่องไม่มีสะดุด',
             'email' => 'Cheeptana.boy@gmail.com',
-            'phone' => '09X-XXX-XXXX',
+            'phone' => '096-770-7287',
             'location' => 'ตลิ่งชัน กรุงเทพฯ, ประเทศไทย',
             'company' => 'บจก. บี.ซี.เอฟ. แกรนด์วู้ด',
             'position' => 'IT Infrastructure & System Specialist',
             'period' => 'พฤษภาคม 2568 — ปัจจุบัน',
+        ],
+
+        'education' => [
+            [
+                'type' => 'degree',
+                'title' => '[ตัวอย่าง] ปริญญาตรี สาขาเทคโนโลยีสารสนเทศ',
+                'institution' => '[ตัวอย่าง] ชื่อมหาวิทยาลัย',
+                'period' => '[ตัวอย่าง] 2564 — 2568',
+            ],
+            [
+                'type' => 'certification',
+                'title' => '[ตัวอย่าง] ชื่อ Certification',
+                'institution' => '[ตัวอย่าง] หน่วยงานผู้ออก',
+                'period' => '[ตัวอย่าง] 2568',
+            ],
         ],
 
         'competencies' => [
@@ -115,11 +130,13 @@ return [
             'nav_toggle_label' => 'เปิดเมนู',
 
             'eyebrow_about' => '01 — เกี่ยวกับ',
-            'eyebrow_competencies' => '02 — ความเชี่ยวชาญ',
-            'eyebrow_achievements' => '03 — ผลงาน',
-            'eyebrow_contact' => '04 — ติดต่อ',
+            'eyebrow_education' => '02 — การศึกษาและใบรับรอง',
+            'eyebrow_competencies' => '03 — ความเชี่ยวชาญ',
+            'eyebrow_achievements' => '04 — ผลงาน',
+            'eyebrow_contact' => '05 — ติดต่อ',
 
             'about_title' => 'เกี่ยวกับฉัน',
+            'education_title' => 'การศึกษาและใบรับรอง',
             'about_label_position' => 'ตำแหน่งปัจจุบัน',
             'about_label_company' => 'บริษัท',
             'about_label_email' => 'อีเมล',
@@ -243,6 +260,21 @@ return [
             'period' => 'May 2025 — Present',
         ],
 
+        'education' => [
+            [
+                'type' => 'degree',
+                'title' => '[Sample] Bachelor\'s Degree in Information Technology',
+                'institution' => '[Sample] University Name',
+                'period' => '[Sample] 2021 — 2025',
+            ],
+            [
+                'type' => 'certification',
+                'title' => '[Sample] Certification Name',
+                'institution' => '[Sample] Issuing Organization',
+                'period' => '[Sample] 2025',
+            ],
+        ],
+
         'competencies' => [
             [
                 'group' => 'Virtualization & Systems Administration',
@@ -322,11 +354,13 @@ return [
             'nav_toggle_label' => 'Open menu',
 
             'eyebrow_about' => '01 — About',
-            'eyebrow_competencies' => '02 — Competencies',
-            'eyebrow_achievements' => '03 — Achievements',
-            'eyebrow_contact' => '04 — Contact',
+            'eyebrow_education' => '02 — Education & Certifications',
+            'eyebrow_competencies' => '03 — Competencies',
+            'eyebrow_achievements' => '04 — Achievements',
+            'eyebrow_contact' => '05 — Contact',
 
             'about_title' => 'About Me',
+            'education_title' => 'Education & Certifications',
             'about_label_position' => 'Current Position',
             'about_label_company' => 'Company',
             'about_label_email' => 'Email',
