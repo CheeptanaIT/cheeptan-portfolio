@@ -39,16 +39,10 @@ return [
         'education' => [
             [
                 'type' => 'degree',
-                'title' => '[ตัวอย่าง] ปริญญาตรี สาขาเทคโนโลยีสารสนเทศ',
-                'institution' => '[ตัวอย่าง] ชื่อมหาวิทยาลัย',
-                'period' => '[ตัวอย่าง] 2564 — 2568',
-            ],
-            [
-                'type' => 'certification',
-                'title' => '[ตัวอย่าง] ชื่อ Certification',
-                'institution' => '[ตัวอย่าง] หน่วยงานผู้ออก',
-                'period' => '[ตัวอย่าง] 2568',
-            ],
+                'title' => 'ปริญญาตรี สาขาเทคโนโลยีสารสนเทศ',
+                'institution' => 'มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออกวิทยาเขตจักรพงษภูวนารถ',
+                'period' => '2564 — 2568',
+            ]
         ],
 
         'competencies' => [
@@ -263,15 +257,9 @@ return [
         'education' => [
             [
                 'type' => 'degree',
-                'title' => '[Sample] Bachelor\'s Degree in Information Technology',
-                'institution' => '[Sample] University Name',
-                'period' => '[Sample] 2021 — 2025',
-            ],
-            [
-                'type' => 'certification',
-                'title' => '[Sample] Certification Name',
-                'institution' => '[Sample] Issuing Organization',
-                'period' => '[Sample] 2025',
+                'title' => 'Bachelor\'s Degree in Information Technology',
+                'institution' => 'Rajamangala University of Technology Tawan-ok, Chakrabongsebhuwanart Campus',
+                'period' => '2021 — 2025',
             ],
         ],
 
