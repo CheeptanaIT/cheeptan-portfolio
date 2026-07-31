@@ -25,7 +25,6 @@ try {
     $posts = $stmt->fetchAll();
 } catch (PDOException $e) {
     $dbError = true;
-    file_put_contents(__DIR__ . '/blog-debug.log', date('c') . ' ' . $e->getMessage() . "\n", FILE_APPEND | LOCK_EX);
 }
 
 require __DIR__ . '/includes/header.php';
