@@ -1,4 +1,7 @@
-<?php $currentPage = $currentPage ?? 'home'; ?>
+<?php
+$currentPage = $currentPage ?? 'home';
+$features = $features ?? require __DIR__ . '/features.php';
+?>
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars($lang) ?>">
 <head>
@@ -21,7 +24,21 @@
             <li><a href="portfolio.php" class="<?= $currentPage === 'portfolio' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_portfolio']) ?></a></li>
             */ ?>
             <li><a href="blog.php" class="<?= $currentPage === 'blog' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_blog']) ?></a></li>
+            <?php if (!empty($features['services_enabled'])): ?>
+            <li><a href="services.php" class="<?= $currentPage === 'services' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_services']) ?></a></li>
+            <?php endif; ?>
+            <?php if (!empty($features['shop_enabled'])): ?>
+            <li><a href="shop.php" class="<?= $currentPage === 'shop' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_shop']) ?></a></li>
+            <?php endif; ?>
             <li><a href="index.php#contact"><?= htmlspecialchars($ui['nav_contact']) ?></a></li>
+            <?php if (!empty($features['shop_enabled'])): ?>
+            <li class="nav-cart">
+                <a href="cart.php" class="<?= $currentPage === 'cart' ? 'is-active' : '' ?>" aria-label="<?= htmlspecialchars($ui['nav_cart']) ?>">
+                    <?= icon('cart') ?>
+                    <span class="cart-badge" hidden>0</span>
+                </a>
+            </li>
+            <?php endif; ?>
             <li class="nav-lang-switch">
                 <a href="?lang=th" class="<?= $lang === 'th' ? 'is-active' : '' ?>">TH</a>
                 <span aria-hidden="true">/</span>

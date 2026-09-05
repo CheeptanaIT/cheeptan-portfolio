@@ -10,6 +10,7 @@ Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure &
 - Working contact form — sends via SMTP (PHPMailer) in production, falls back to `mail()` locally
 - Portfolio page for project and document case studies
 - Blog backed by MySQL (schema included), with a password-protected `/admin/` panel for writing and editing posts
+- Services page (freelance IT services list) and Shop page (cart + email/LINE order request) — each can be turned on/off independently, see [Feature toggles](#feature-toggles)
 - Responsive layout, reviewed against WCAG accessibility basics
 - Auto-deploys to hosting via GitHub Actions on every push to `master`
 
@@ -25,15 +26,38 @@ Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure &
 
 ```
 config.php            All site copy/content, split by language (th/en)
-includes/             Shared layout (header/footer), language + DB helpers, icons
+includes/             Shared layout (header/footer), language + DB helpers, icons, feature toggles
 index.php             Home page (hero, about, competencies, achievements, contact)
 portfolio.php         Portfolio / case studies page
 blog.php, blog-post.php  MySQL-backed blog listing and post detail
+services.php          Services list (freelance IT work), links out to the contact form
+shop.php, cart.php    Product listing, cart (localStorage), and checkout form
 contact-handler.php   Contact form submission endpoint
+order-handler.php     Shop checkout submission endpoint (emails the order, like contact-handler.php)
 assets/               CSS, JS, images
 schema.sql            MySQL schema + seed data for the blog
 .github/workflows/    CI deploy workflow
 ```
+
+## Feature toggles
+
+Services and Shop can each be switched on/off independently in [includes/features.php](includes/features.php):
+
+```php
+return [
+    'services_enabled' => true,
+    'shop_enabled' => true,
+];
+```
+
+Flip either to `false` when there isn't time to keep that side running — the nav link (and the
+`cart.php` link, tied to Shop) disappears, and hitting the page URL directly redirects to the
+home page. No code needs to be deleted; flip it back to `true` later.
+
+Both pages' content — service listings and shop products/prices — is plain data in `config.php`
+(`services` and `shop` keys, one per language), edited the same way as the Portfolio items. There
+is no database or admin UI behind them; the Shop's "order" flow only emails/collects the request,
+it doesn't take payment or track stock.
 
 ## Local development
 

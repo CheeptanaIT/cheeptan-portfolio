@@ -14,6 +14,12 @@
                     <a href="index.php#achievements"><?= htmlspecialchars($ui['nav_achievements']) ?></a>
                     <?php /* hidden for now: portfolio.php nav link (placeholder content) */ ?>
                     <a href="blog.php"><?= htmlspecialchars($ui['nav_blog']) ?></a>
+                    <?php if (!empty($features['services_enabled'])): ?>
+                    <a href="services.php"><?= htmlspecialchars($ui['nav_services']) ?></a>
+                    <?php endif; ?>
+                    <?php if (!empty($features['shop_enabled'])): ?>
+                    <a href="shop.php"><?= htmlspecialchars($ui['nav_shop']) ?></a>
+                    <?php endif; ?>
                     <a href="index.php#contact"><?= htmlspecialchars($ui['nav_contact']) ?></a>
                 </nav>
             </div>
@@ -24,5 +30,6 @@
     </div>
 </footer>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/shop.js"></script>
 </body>
 </html>

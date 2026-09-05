@@ -12,6 +12,8 @@ function icon(string $name): string
         'mail' => '<path d="M4 5h16v14H4z"/><path d="M4.5 5.5l7.5 7 7.5-7"/>',
         'folder' => '<path d="M3 6.5a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>',
         'document' => '<path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4"/><path d="M9 12h6"/><path d="M9 15.5h6"/><path d="M9 19h3"/>',
+        'cart' => '<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.5l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/>',
+        'tag' => '<path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="8" cy="8" r="1.4"/>',
     ];
 
     $path = $icons[$name] ?? '';
