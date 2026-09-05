@@ -81,7 +81,7 @@ if (!is_array($cartItems) || count($cartItems) === 0) {
 }
 
 // สร้างรายการสินค้าจริงจาก DB เท่านั้น ไม่เชื่อชื่อ/ราคาที่ส่งมาจาก client (localStorage แก้ไขได้ง่าย)
-require __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/db.php';
 $titleCol = $lang === 'en' ? 'title_en' : 'title_th';
 
 $requestedIds = [];

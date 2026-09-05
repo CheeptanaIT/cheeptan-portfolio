@@ -15,7 +15,7 @@ $ui = $data['ui'];
 $shop = $data['shop'];
 $currentPage = 'shop';
 require __DIR__ . '/../includes/icons.php';
-require __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/db.php';
 
 $titleCol = $lang === 'en' ? 'title_en' : 'title_th';
 $descCol = $lang === 'en' ? 'description_en' : 'description_th';

@@ -16,7 +16,7 @@ $shop = $data['shop'];
 $cart = $data['cart'];
 $currentPage = 'cart';
 require __DIR__ . '/../includes/icons.php';
-require __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/db.php';
 
 // ให้ JS ฝั่ง client เอาไปจับคู่ id ใน localStorage กับชื่อ/ราคาสินค้าจริงจาก DB
 // (ไม่เชื่อราคาที่ localStorage เก็บไว้ตรงๆ เผื่อถูกแก้ไข)
