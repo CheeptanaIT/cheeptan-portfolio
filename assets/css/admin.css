@@ -28,6 +28,28 @@
     padding: var(--space-4) var(--space-3);
 }
 
+.admin-subnav {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.admin-subnav a {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.admin-subnav a:hover {
+    color: var(--color-text);
+}
+
+.admin-subnav a.is-active {
+    color: var(--color-accent);
+}
+
 .admin-topbar {
     display: flex;
     align-items: center;

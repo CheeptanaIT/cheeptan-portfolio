@@ -15,17 +15,25 @@ $shop = $data['shop'];
 $cart = $data['cart'];
 $currentPage = 'cart';
 require __DIR__ . '/includes/icons.php';
-require __DIR__ . '/includes/header.php';
+require __DIR__ . '/includes/db.php';
 
-// ให้ JS ฝั่ง client เอาไปจับคู่ id ใน localStorage กับชื่อ/ราคาสินค้าจริง
+// ให้ JS ฝั่ง client เอาไปจับคู่ id ใน localStorage กับชื่อ/ราคาสินค้าจริงจาก DB
 // (ไม่เชื่อราคาที่ localStorage เก็บไว้ตรงๆ เผื่อถูกแก้ไข)
+$titleCol = $lang === 'en' ? 'title_en' : 'title_th';
 $productsById = [];
-foreach ($shop['items'] as $item) {
-    $productsById[$item['id']] = [
-        'title' => $item['title'],
-        'price' => $item['price'],
-    ];
+try {
+    $stmt = get_db()->query("SELECT id, {$titleCol} AS title, price FROM products WHERE is_active = 1");
+    foreach ($stmt->fetchAll() as $row) {
+        $productsById[(string) $row['id']] = [
+            'title' => $row['title'],
+            'price' => (float) $row['price'],
+        ];
+    }
+} catch (PDOException $e) {
+    // เหลือ $productsById ว่าง — cart.js จะกรองรายการที่จับคู่ไม่ได้ทิ้งไปเอง
 }
+
+require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="page-hero">

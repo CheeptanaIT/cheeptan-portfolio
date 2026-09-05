@@ -231,29 +231,9 @@ return [
             'back_to_home' => 'กลับหน้าแรก',
             'price_prefix' => 'เริ่มต้น',
             'cta_label' => 'สอบถาม/จ้างงาน',
-            'items' => [
-                [
-                    'icon' => 'server',
-                    'title' => '[ตัวอย่าง] ติดตั้ง/ย้ายระบบ VMware vSphere',
-                    'description' => 'อธิบายขอบเขตงานสั้นๆ เช่น ติดตั้ง ESXi ใหม่ ย้าย VM ข้ามโฮสต์ หรือวางแผน High Availability ให้ระบบ',
-                    'price' => '3,500 บาท / ครั้ง',
-                    'tags' => ['VMware', 'ESXi'],
-                ],
-                [
-                    'icon' => 'shield',
-                    'title' => '[ตัวอย่าง] วางระบบ Fortinet Firewall',
-                    'description' => 'ตั้งค่า Firewall policy, VPN, และแบ่ง VLAN ให้เครือข่ายองค์กรขนาดเล็ก-กลางปลอดภัยขึ้น',
-                    'price' => '2,500 บาท / ครั้ง',
-                    'tags' => ['Fortinet', 'Network Security'],
-                ],
-                [
-                    'icon' => 'database',
-                    'title' => '[ตัวอย่าง] วางระบบ Backup & Recovery',
-                    'description' => 'ออกแบบแผนสำรองข้อมูลและทดสอบการกู้คืน พร้อมคำแนะนำ NAS/พื้นที่จัดเก็บที่เหมาะสม',
-                    'price' => '2,000 บาท / ครั้ง',
-                    'tags' => ['Backup', 'NAS'],
-                ],
-            ],
+            'error_state' => 'ไม่สามารถโหลดบริการได้ในขณะนี้ กรุณาลองใหม่ภายหลัง',
+            'empty_state' => 'ยังไม่มีบริการเปิดให้จองในตอนนี้',
+            // รายการบริการจริงอยู่ในตาราง `services` (MySQL) แก้ไขผ่าน /admin/services.php
         ],
 
         'shop' => [
@@ -264,29 +244,9 @@ return [
             'add_to_cart' => 'เพิ่มลงตะกร้า',
             'added_to_cart' => 'เพิ่มแล้ว ✓',
             'currency' => 'บาท',
-            'items' => [
-                [
-                    'id' => 'sample-01',
-                    'title' => '[ตัวอย่าง] สาย LAN Cat6 (5 เมตร)',
-                    'description' => 'สาย LAN สำเร็จรูปพร้อมใช้งาน เหมาะสำหรับต่อ Access Point หรืออุปกรณ์เครือข่ายในบ้าน/ออฟฟิศ',
-                    'price' => 150,
-                    'tags' => ['Networking'],
-                ],
-                [
-                    'id' => 'sample-02',
-                    'title' => '[ตัวอย่าง] Managed Switch มือสอง 8 พอร์ต',
-                    'description' => 'สวิตช์มือสองสภาพดี ผ่านการทดสอบก่อนขาย เหมาะสำหรับแบ่ง VLAN ในวงเครือข่ายขนาดเล็ก',
-                    'price' => 1200,
-                    'tags' => ['Hardware'],
-                ],
-                [
-                    'id' => 'sample-03',
-                    'title' => '[ตัวอย่าง] บริการติดตั้งเราเตอร์ที่บ้าน',
-                    'description' => 'บริการเดินทางไปติดตั้ง/ตั้งค่าเราเตอร์และ Wi-Fi ให้ถึงที่ ในเขตกรุงเทพฯ',
-                    'price' => 500,
-                    'tags' => ['On-site'],
-                ],
-            ],
+            'error_state' => 'ไม่สามารถโหลดสินค้าได้ในขณะนี้ กรุณาลองใหม่ภายหลัง',
+            'empty_state' => 'ยังไม่มีสินค้าวางขายในตอนนี้',
+            // รายการสินค้าจริงอยู่ในตาราง `products` (MySQL) แก้ไขผ่าน /admin/products.php
         ],
 
         'cart' => [
@@ -543,29 +503,9 @@ return [
             'back_to_home' => 'Back to Home',
             'price_prefix' => 'Starting at',
             'cta_label' => 'Inquire / Hire',
-            'items' => [
-                [
-                    'icon' => 'server',
-                    'title' => '[Sample] VMware vSphere Setup / Migration',
-                    'description' => 'e.g. fresh ESXi install, cross-host VM migration, or planning High Availability for your environment.',
-                    'price' => '3,500 THB / job',
-                    'tags' => ['VMware', 'ESXi'],
-                ],
-                [
-                    'icon' => 'shield',
-                    'title' => '[Sample] Fortinet Firewall Rollout',
-                    'description' => 'Configure firewall policies, VPN, and VLAN segmentation to secure a small-to-medium business network.',
-                    'price' => '2,500 THB / job',
-                    'tags' => ['Fortinet', 'Network Security'],
-                ],
-                [
-                    'icon' => 'database',
-                    'title' => '[Sample] Backup & Recovery Setup',
-                    'description' => 'Design a backup plan and test recovery, plus recommendations on NAS/storage that fit your needs.',
-                    'price' => '2,000 THB / job',
-                    'tags' => ['Backup', 'NAS'],
-                ],
-            ],
+            'error_state' => 'Unable to load services right now. Please try again later.',
+            'empty_state' => 'No services available to book right now.',
+            // Actual service listings live in the `services` MySQL table, edited via /admin/services.php
         ],
 
         'shop' => [
@@ -576,29 +516,9 @@ return [
             'add_to_cart' => 'Add to Cart',
             'added_to_cart' => 'Added ✓',
             'currency' => 'THB',
-            'items' => [
-                [
-                    'id' => 'sample-01',
-                    'title' => '[Sample] Cat6 LAN Cable (5m)',
-                    'description' => 'Ready-to-use LAN cable, great for connecting an access point or other network gear at home or in the office.',
-                    'price' => 150,
-                    'tags' => ['Networking'],
-                ],
-                [
-                    'id' => 'sample-02',
-                    'title' => '[Sample] Used 8-Port Managed Switch',
-                    'description' => 'Tested, good-condition used switch. Great for VLAN segmentation on a small network.',
-                    'price' => 1200,
-                    'tags' => ['Hardware'],
-                ],
-                [
-                    'id' => 'sample-03',
-                    'title' => '[Sample] Home Router Installation Service',
-                    'description' => 'On-site router and Wi-Fi setup service, within the Bangkok area.',
-                    'price' => 500,
-                    'tags' => ['On-site'],
-                ],
-            ],
+            'error_state' => 'Unable to load products right now. Please try again later.',
+            'empty_state' => 'No products for sale right now.',
+            // Actual product listings live in the `products` MySQL table, edited via /admin/products.php
         ],
 
         'cart' => [

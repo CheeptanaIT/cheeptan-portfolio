@@ -14,6 +14,27 @@ $ui = $data['ui'];
 $services = $data['services'];
 $currentPage = 'services';
 require __DIR__ . '/includes/icons.php';
+require __DIR__ . '/includes/db.php';
+
+$titleCol = $lang === 'en' ? 'title_en' : 'title_th';
+$descCol = $lang === 'en' ? 'description_en' : 'description_th';
+$priceCol = $lang === 'en' ? 'price_en' : 'price_th';
+
+$items = [];
+$dbError = false;
+
+try {
+    $stmt = get_db()->query(
+        "SELECT icon, {$titleCol} AS title, {$descCol} AS description, {$priceCol} AS price, tags
+         FROM services
+         WHERE is_active = 1
+         ORDER BY sort_order ASC, id ASC"
+    );
+    $items = $stmt->fetchAll();
+} catch (PDOException $e) {
+    $dbError = true;
+}
+
 require __DIR__ . '/includes/header.php';
 ?>
 
@@ -28,26 +49,33 @@ require __DIR__ . '/includes/header.php';
 
 <section class="services-section">
     <div class="container">
-        <div class="services-grid">
-            <?php foreach ($services['items'] as $i => $item): ?>
-                <div class="service-card reveal" style="--reveal-delay: <?= $i * 70 ?>ms">
-                    <div class="service-card-icon"><?= icon($item['icon']) ?></div>
-                    <h3 class="service-card-title"><?= htmlspecialchars($item['title']) ?></h3>
-                    <p class="service-card-desc"><?= htmlspecialchars($item['description']) ?></p>
-                    <?php if (!empty($item['tags'])): ?>
-                        <ul class="service-tags">
-                            <?php foreach ($item['tags'] as $tag): ?>
-                                <li><?= htmlspecialchars($tag) ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-                    <div class="service-card-footer">
-                        <span class="service-price"><?= htmlspecialchars($services['price_prefix']) ?> <?= htmlspecialchars($item['price']) ?></span>
-                        <a class="btn btn-primary btn-sm" href="index.php#contact"><?= htmlspecialchars($services['cta_label']) ?></a>
+        <?php if ($dbError): ?>
+            <p class="blog-state"><?= htmlspecialchars($services['error_state']) ?></p>
+        <?php elseif (empty($items)): ?>
+            <p class="blog-state"><?= htmlspecialchars($services['empty_state']) ?></p>
+        <?php else: ?>
+            <div class="services-grid">
+                <?php foreach ($items as $i => $item): ?>
+                    <div class="service-card reveal" style="--reveal-delay: <?= $i * 70 ?>ms">
+                        <div class="service-card-icon"><?= icon($item['icon']) ?></div>
+                        <h3 class="service-card-title"><?= htmlspecialchars($item['title']) ?></h3>
+                        <p class="service-card-desc"><?= htmlspecialchars($item['description']) ?></p>
+                        <?php $tags = array_filter(array_map('trim', explode(',', $item['tags']))); ?>
+                        <?php if ($tags): ?>
+                            <ul class="service-tags">
+                                <?php foreach ($tags as $tag): ?>
+                                    <li><?= htmlspecialchars($tag) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                        <div class="service-card-footer">
+                            <span class="service-price"><?= htmlspecialchars($services['price_prefix']) ?> <?= htmlspecialchars($item['price']) ?></span>
+                            <a class="btn btn-primary btn-sm" href="index.php#contact"><?= htmlspecialchars($services['cta_label']) ?></a>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 

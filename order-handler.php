@@ -79,14 +79,32 @@ if (!is_array($cartItems) || count($cartItems) === 0) {
     exit;
 }
 
-// สร้างรายการสินค้าจริงจาก config.php เท่านั้น ไม่เชื่อชื่อ/ราคาที่ส่งมาจาก client
-// (localStorage แก้ไขได้ง่าย) — มองหา id ในสินค้าของทั้งสองภาษาเผื่อผู้ใช้สลับภาษาระหว่างช้อป
+// สร้างรายการสินค้าจริงจาก DB เท่านั้น ไม่เชื่อชื่อ/ราคาที่ส่งมาจาก client (localStorage แก้ไขได้ง่าย)
+require __DIR__ . '/includes/db.php';
+$titleCol = $lang === 'en' ? 'title_en' : 'title_th';
+
+$requestedIds = [];
+foreach ($cartItems as $line) {
+    $id = is_array($line) ? (int) ($line['id'] ?? 0) : 0;
+    if ($id > 0) {
+        $requestedIds[$id] = true;
+    }
+}
+
 $catalog = [];
-foreach ($all as $langKey => $langData) {
-    foreach (($langData['shop']['items'] ?? []) as $product) {
-        if (!isset($catalog[$product['id']])) {
-            $catalog[$product['id']] = $product;
+if ($requestedIds !== []) {
+    $ids = array_keys($requestedIds);
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    try {
+        $stmt = get_db()->prepare(
+            "SELECT id, {$titleCol} AS title, price FROM products WHERE is_active = 1 AND id IN ({$placeholders})"
+        );
+        $stmt->execute($ids);
+        foreach ($stmt->fetchAll() as $row) {
+            $catalog[(int) $row['id']] = $row;
         }
+    } catch (PDOException $e) {
+        // เหลือ $catalog ว่าง — จะได้ empty_cart ด้านล่างถ้าไม่มีรายการที่จับคู่ได้เลย
     }
 }
 
@@ -98,16 +116,15 @@ foreach ($cartItems as $line) {
     if (count($lines) >= $maxLines) {
         break;
     }
-    $id = is_array($line) ? ($line['id'] ?? '') : '';
-    $id = is_string($id) ? $id : '';
-    if ($id === '' || !isset($catalog[$id])) {
+    $id = is_array($line) ? (int) ($line['id'] ?? 0) : 0;
+    if ($id <= 0 || !isset($catalog[$id])) {
         continue;
     }
     $qty = is_array($line) ? (int) ($line['qty'] ?? 1) : 1;
     $qty = max(1, min(99, $qty));
 
     $product = $catalog[$id];
-    $lineTotal = $product['price'] * $qty;
+    $lineTotal = ((float) $product['price']) * $qty;
     $total += $lineTotal;
 
     $lines[] = sprintf('- %s  x%d  = %s %s', $product['title'], $qty, number_format($lineTotal), $data['shop']['currency']);

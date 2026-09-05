@@ -9,15 +9,16 @@ Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure &
 - Bilingual Thai / English with a persistent language switch (cookie-based)
 - Working contact form — sends via SMTP (PHPMailer) in production, falls back to `mail()` locally
 - Portfolio page for project and document case studies
-- Blog backed by MySQL (schema included), with a password-protected `/admin/` panel for writing and editing posts
+- Blog, Services, and Shop content are all backed by MySQL (schema included), each managed from the
+  password-protected `/admin/` panel — no code changes or deploys needed to edit content
 - Services page (freelance IT services list) and Shop page (cart + email/LINE order request) — each can be turned on/off independently, see [Feature toggles](#feature-toggles)
 - Responsive layout, reviewed against WCAG accessibility basics
 - Auto-deploys to hosting via GitHub Actions on every push to `master`
 
 ## Tech stack
 
-- PHP 8, no framework — a single [config.php](config.php) drives all page content
-- MySQL / MariaDB via PDO for the blog
+- PHP 8, no framework — a single [config.php](config.php) drives page chrome/copy (nav labels, section text)
+- MySQL / MariaDB via PDO for Blog, Services, and Shop content
 - Vanilla CSS and JavaScript, no build step
 - [PHPMailer](includes/PHPMailer) for SMTP email delivery
 - GitHub Actions + FTP deploy to shared hosting
@@ -30,12 +31,14 @@ includes/             Shared layout (header/footer), language + DB helpers, icon
 index.php             Home page (hero, about, competencies, achievements, contact)
 portfolio.php         Portfolio / case studies page
 blog.php, blog-post.php  MySQL-backed blog listing and post detail
-services.php          Services list (freelance IT work), links out to the contact form
-shop.php, cart.php    Product listing, cart (localStorage), and checkout form
+services.php          MySQL-backed services list (freelance IT work), links out to the contact form
+shop.php, cart.php    MySQL-backed product listing, cart (localStorage), and checkout form
 contact-handler.php   Contact form submission endpoint
-order-handler.php     Shop checkout submission endpoint (emails the order, like contact-handler.php)
+order-handler.php     Shop checkout submission endpoint (emails the order, like contact-handler.php);
+                      re-validates item ids/prices against the `products` table, ignoring client-sent values
+admin/                Password-protected CRUD for blog posts, services, and products
 assets/               CSS, JS, images
-schema.sql            MySQL schema + seed data for the blog
+schema.sql            MySQL schema + seed data for blog_posts, services, and products
 .github/workflows/    CI deploy workflow
 ```
 
@@ -54,10 +57,11 @@ Flip either to `false` when there isn't time to keep that side running — the n
 `cart.php` link, tied to Shop) disappears, and hitting the page URL directly redirects to the
 home page. No code needs to be deleted; flip it back to `true` later.
 
-Both pages' content — service listings and shop products/prices — is plain data in `config.php`
-(`services` and `shop` keys, one per language), edited the same way as the Portfolio items. There
-is no database or admin UI behind them; the Shop's "order" flow only emails/collects the request,
-it doesn't take payment or track stock.
+Service listings and shop products/prices live in MySQL (`services` and `products` tables) and are
+edited from `/admin/`, same as blog posts. Page chrome around them — the eyebrow/title/subtitle,
+button labels, currency symbol, empty/error-state text — stays in `config.php` (`services`, `shop`,
+`cart` keys, one per language) since that's copy, not inventory. The Shop's "order" flow only
+emails/collects the request; it doesn't take payment or track stock.
 
 ## Local development
 
@@ -65,8 +69,8 @@ it doesn't take payment or track stock.
 php -S 127.0.0.1:8899
 ```
 
-The blog feature additionally needs a local MySQL/MariaDB server, with the database
-created first and the schema imported into it:
+Blog, Services, and Shop all need a local MySQL/MariaDB server, with the database created first
+and the schema imported into it:
 
 ```bash
 mysql -u root -e "CREATE DATABASE p1_home_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
@@ -75,9 +79,9 @@ mysql -u root p1_home_blog < schema.sql
 
 ## Admin panel
 
-Blog posts are managed at `/admin/` (list, create, edit, delete — no public link, reached by
-typing the URL directly). It's protected by a single password, stored only as a hash via
-`ADMIN_PASSWORD_HASH` — never the plaintext. Generate it once with:
+Blog posts, services, and products are all managed at `/admin/` (list, create, edit, delete for
+each — no public link, reached by typing the URL directly). It's protected by a single password,
+stored only as a hash via `ADMIN_PASSWORD_HASH` — never the plaintext. Generate it once with:
 
 ```bash
 php -r "echo password_hash('your-password', PASSWORD_DEFAULT), PHP_EOL;"
@@ -91,6 +95,11 @@ Then set the resulting hash as the `ADMIN_PASSWORD_HASH` value in `includes/loca
 Every push to `master` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which uploads the site to hosting via FTP using GitHub Secrets (`FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `FTP_SERVER_DIR`).
 
 Database and SMTP credentials are read from environment variables at runtime — see [.env.example](.env.example) for the full list and where to find each value on the hosting side.
+
+New MySQL tables (like `services`/`products`) aren't created automatically by a deploy — visit a
+one-off migration script's URL once in a browser after it ships (it uses `CREATE TABLE IF NOT
+EXISTS`, so it's safe to load twice), then delete the script in a follow-up commit. That's the same
+approach `update-blog-post.php` used for `blog_posts` earlier in this project's history.
 
 ## License
 
