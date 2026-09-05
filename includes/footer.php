@@ -10,8 +10,6 @@
                 <h3 class="footer-col-title"><?= htmlspecialchars($ui['footer_menu_title']) ?></h3>
                 <nav class="footer-nav">
                     <a href="index.php#about"><?= htmlspecialchars($ui['nav_about']) ?></a>
-                    <a href="index.php#competencies"><?= htmlspecialchars($ui['nav_competencies']) ?></a>
-                    <a href="index.php#achievements"><?= htmlspecialchars($ui['nav_achievements']) ?></a>
                     <?php if (!empty($features['portfolio_enabled'])): ?>
                     <a href="portfolio.php"><?= htmlspecialchars($ui['nav_portfolio']) ?></a>
                     <?php endif; ?>

@@ -114,12 +114,11 @@ return [
 
     'ui' => [
         'nav_about' => 'About',
-        'nav_competencies' => 'Competencies',
-        'nav_achievements' => 'Achievements',
         'nav_portfolio' => 'Portfolio',
         'nav_blog' => 'Blog',
         'nav_services' => 'Services',
         'nav_shop' => 'Shop',
+        'nav_services_shop' => 'Services & Shop',
         'nav_cart' => 'Cart',
         'nav_contact' => 'Contact',
         'nav_toggle_label' => 'Open menu',

@@ -114,12 +114,11 @@ return [
 
     'ui' => [
         'nav_about' => 'เกี่ยวกับ',
-        'nav_competencies' => 'ความเชี่ยวชาญ',
-        'nav_achievements' => 'ผลงาน',
         'nav_portfolio' => 'แฟ้มผลงาน',
         'nav_blog' => 'บล็อก',
         'nav_services' => 'บริการ',
         'nav_shop' => 'ร้านค้า',
+        'nav_services_shop' => 'บริการ/ร้านค้า',
         'nav_cart' => 'ตะกร้าสินค้า',
         'nav_contact' => 'ติดต่อ',
         'nav_toggle_label' => 'เปิดเมนู',

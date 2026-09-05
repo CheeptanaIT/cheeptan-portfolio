@@ -20,18 +20,23 @@ $features = $features ?? get_features();
         <button class="nav-toggle" aria-label="<?= htmlspecialchars($ui['nav_toggle_label']) ?>" aria-expanded="false" aria-controls="nav-links">&#9776;</button>
         <ul class="nav-links" id="nav-links">
             <li><a href="index.php#about"><?= htmlspecialchars($ui['nav_about']) ?></a></li>
-            <li><a href="index.php#competencies"><?= htmlspecialchars($ui['nav_competencies']) ?></a></li>
-            <li><a href="index.php#achievements"><?= htmlspecialchars($ui['nav_achievements']) ?></a></li>
             <?php if (!empty($features['portfolio_enabled'])): ?>
             <li><a href="portfolio.php" class="<?= $currentPage === 'portfolio' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_portfolio']) ?></a></li>
             <?php endif; ?>
             <?php if (!empty($features['blog_enabled'])): ?>
             <li><a href="blog.php" class="<?= $currentPage === 'blog' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_blog']) ?></a></li>
             <?php endif; ?>
-            <?php if (!empty($features['services_enabled'])): ?>
+            <?php if (!empty($features['services_enabled']) && !empty($features['shop_enabled'])): ?>
+            <li class="nav-dropdown">
+                <a href="services.php" class="nav-dropdown-toggle <?= in_array($currentPage, ['services', 'shop', 'cart'], true) ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_services_shop']) ?></a>
+                <ul class="nav-dropdown-menu">
+                    <li><a href="services.php" class="<?= $currentPage === 'services' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_services']) ?></a></li>
+                    <li><a href="shop.php" class="<?= $currentPage === 'shop' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_shop']) ?></a></li>
+                </ul>
+            </li>
+            <?php elseif (!empty($features['services_enabled'])): ?>
             <li><a href="services.php" class="<?= $currentPage === 'services' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_services']) ?></a></li>
-            <?php endif; ?>
-            <?php if (!empty($features['shop_enabled'])): ?>
+            <?php elseif (!empty($features['shop_enabled'])): ?>
             <li><a href="shop.php" class="<?= $currentPage === 'shop' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_shop']) ?></a></li>
             <?php endif; ?>
             <li><a href="index.php#contact"><?= htmlspecialchars($ui['nav_contact']) ?></a></li>
