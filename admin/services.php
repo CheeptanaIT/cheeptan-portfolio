@@ -11,42 +11,23 @@ $items = get_db()->query(
 )->fetchAll();
 
 $token = csrf_token();
+
+$adminTitle = 'Services';
+$adminSubtitle = 'Freelance IT services listed on the public Services page.';
+$adminActive = 'services';
+$adminHeaderActions = '<a class="btn btn-primary" href="service-form.php">+ New service</a>';
+require __DIR__ . '/../includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Admin — Services</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
-<div class="admin-shell">
-    <nav class="admin-subnav">
-        <a href="index.php">Blog Posts</a>
-        <a href="services.php" class="is-active">Services</a>
-        <a href="products.php">Products</a>
-        <a href="settings.php">Settings</a>
-    </nav>
 
-    <div class="admin-topbar">
-        <h1 class="admin-title">Services</h1>
-        <div class="admin-actions">
-            <a class="btn btn-primary" href="service-form.php">+ New service</a>
-            <a class="btn btn-outline" href="logout.php">Log out</a>
-        </div>
-    </div>
+<?php if (isset($_GET['saved'])): ?>
+    <div class="admin-alert admin-alert--success">Service saved.</div>
+<?php elseif (isset($_GET['deleted'])): ?>
+    <div class="admin-alert admin-alert--success">Service deleted.</div>
+<?php endif; ?>
 
-    <?php if (isset($_GET['saved'])): ?>
-        <p class="form-note success">Service saved.</p>
-    <?php elseif (isset($_GET['deleted'])): ?>
-        <p class="form-note success">Service deleted.</p>
-    <?php endif; ?>
-
+<div class="admin-card">
     <?php if (empty($items)): ?>
-        <p>No services yet.</p>
+        <p class="admin-empty">No services yet — create the first one.</p>
     <?php else: ?>
         <table class="admin-table">
             <thead>
@@ -71,11 +52,11 @@ $token = csrf_token();
                         </td>
                         <td>
                             <div class="admin-actions">
-                                <a class="btn btn-outline" href="service-form.php?id=<?= (int) $item['id'] ?>">Edit</a>
+                                <a class="btn btn-outline btn-sm" href="service-form.php?id=<?= (int) $item['id'] ?>">Edit</a>
                                 <form method="post" action="service-delete.php" onsubmit="return confirm('Delete this service? This cannot be undone.');">
                                     <input type="hidden" name="id" value="<?= (int) $item['id'] ?>">
                                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
-                                    <button type="submit" class="btn btn-outline">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </div>
                         </td>
@@ -85,5 +66,5 @@ $token = csrf_token();
         </table>
     <?php endif; ?>
 </div>
-</body>
-</html>
+
+<?php require __DIR__ . '/../includes/admin-footer.php'; ?>

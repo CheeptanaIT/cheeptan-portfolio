@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../includes/env.php';
 require __DIR__ . '/../includes/admin-auth.php';
+require __DIR__ . '/../includes/icons.php';
 
 admin_session_start();
 
@@ -42,6 +43,7 @@ $token = csrf_token();
 <body>
 <div class="admin-login-wrap">
     <form class="admin-login-card" method="post" novalidate>
+        <div class="admin-login-icon"><?= icon('lock') ?></div>
         <h1 class="admin-login-title">Admin Login</h1>
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
         <div class="form-group">

@@ -104,28 +104,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $token = csrf_token();
+
+$adminTitle = $isEdit ? 'Edit Service' : 'New Service';
+$adminActive = 'services';
+$adminHeaderActions = '<a class="btn btn-outline" href="services.php">&larr; Back to list</a>';
+require __DIR__ . '/../includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title><?= $isEdit ? 'Edit Service' : 'New Service' ?> — Admin</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
-<div class="admin-shell">
-    <div class="admin-topbar">
-        <h1 class="admin-title"><?= $isEdit ? 'Edit Service' : 'New Service' ?></h1>
-        <a class="btn btn-outline" href="services.php">&larr; Back to list</a>
-    </div>
 
-    <?php if ($error): ?>
-        <p class="form-note error"><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
+<?php if ($error): ?>
+    <div class="admin-alert admin-alert--error"><?= htmlspecialchars($error) ?></div>
+<?php endif; ?>
 
+<div class="admin-card">
     <form method="post" novalidate>
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
         <?php if ($isEdit): ?>
@@ -186,9 +176,12 @@ $token = csrf_token();
                 <input type="number" id="sort_order" name="sort_order" step="1" value="<?= (int) $item['sort_order'] ?>">
             </div>
             <div class="form-group">
-                <label for="is_active">
-                    <input type="checkbox" id="is_active" name="is_active" value="1" <?= $item['is_active'] ? 'checked' : '' ?>>
-                    Active (shown on the Services page)
+                <label class="admin-toggle-row" for="is_active">
+                    <span class="admin-toggle-row-label">Active (shown on the Services page)</span>
+                    <span class="admin-switch">
+                        <input type="checkbox" id="is_active" name="is_active" value="1" <?= $item['is_active'] ? 'checked' : '' ?>>
+                        <span class="admin-switch-track"></span>
+                    </span>
                 </label>
             </div>
         </div>
@@ -196,5 +189,5 @@ $token = csrf_token();
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
-</body>
-</html>
+
+<?php require __DIR__ . '/../includes/admin-footer.php'; ?>

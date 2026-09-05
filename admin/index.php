@@ -11,42 +11,23 @@ $posts = get_db()->query(
 )->fetchAll();
 
 $token = csrf_token();
+
+$adminTitle = 'Blog Posts';
+$adminSubtitle = 'Write, edit, and publish posts for the public blog.';
+$adminActive = 'posts';
+$adminHeaderActions = '<a class="btn btn-primary" href="post-form.php">+ New post</a>';
+require __DIR__ . '/../includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Admin — Blog Posts</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
-<div class="admin-shell">
-    <nav class="admin-subnav">
-        <a href="index.php" class="is-active">Blog Posts</a>
-        <a href="services.php">Services</a>
-        <a href="products.php">Products</a>
-        <a href="settings.php">Settings</a>
-    </nav>
 
-    <div class="admin-topbar">
-        <h1 class="admin-title">Blog Posts</h1>
-        <div class="admin-actions">
-            <a class="btn btn-primary" href="post-form.php">+ New post</a>
-            <a class="btn btn-outline" href="logout.php">Log out</a>
-        </div>
-    </div>
+<?php if (isset($_GET['saved'])): ?>
+    <div class="admin-alert admin-alert--success">Post saved.</div>
+<?php elseif (isset($_GET['deleted'])): ?>
+    <div class="admin-alert admin-alert--success">Post deleted.</div>
+<?php endif; ?>
 
-    <?php if (isset($_GET['saved'])): ?>
-        <p class="form-note success">Post saved.</p>
-    <?php elseif (isset($_GET['deleted'])): ?>
-        <p class="form-note success">Post deleted.</p>
-    <?php endif; ?>
-
+<div class="admin-card">
     <?php if (empty($posts)): ?>
-        <p>No posts yet.</p>
+        <p class="admin-empty">No posts yet — create the first one.</p>
     <?php else: ?>
         <table class="admin-table">
             <thead>
@@ -71,11 +52,11 @@ $token = csrf_token();
                         <td><?= $post['published_at'] ? htmlspecialchars(date('d M Y', strtotime($post['published_at']))) : '—' ?></td>
                         <td>
                             <div class="admin-actions">
-                                <a class="btn btn-outline" href="post-form.php?id=<?= (int) $post['id'] ?>">Edit</a>
+                                <a class="btn btn-outline btn-sm" href="post-form.php?id=<?= (int) $post['id'] ?>">Edit</a>
                                 <form method="post" action="delete.php" onsubmit="return confirm('Delete this post? This cannot be undone.');">
                                     <input type="hidden" name="id" value="<?= (int) $post['id'] ?>">
                                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
-                                    <button type="submit" class="btn btn-outline">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </div>
                         </td>
@@ -85,5 +66,5 @@ $token = csrf_token();
         </table>
     <?php endif; ?>
 </div>
-</body>
-</html>
+
+<?php require __DIR__ . '/../includes/admin-footer.php'; ?>

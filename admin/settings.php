@@ -43,55 +43,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $current = get_features();
 
 $token = csrf_token();
+
+$adminTitle = 'Settings';
+$adminSubtitle = 'Turn menus on or off — no code change or deploy needed.';
+$adminActive = 'settings';
+require __DIR__ . '/../includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Admin — Settings</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
-<div class="admin-shell">
-    <nav class="admin-subnav">
-        <a href="index.php">Blog Posts</a>
-        <a href="services.php">Services</a>
-        <a href="products.php">Products</a>
-        <a href="settings.php" class="is-active">Settings</a>
-    </nav>
 
-    <div class="admin-topbar">
-        <h1 class="admin-title">Settings</h1>
-        <a class="btn btn-outline" href="logout.php">Log out</a>
-    </div>
+<?php if (isset($_GET['saved'])): ?>
+    <div class="admin-alert admin-alert--success">Settings saved.</div>
+<?php endif; ?>
+<?php if ($error): ?>
+    <div class="admin-alert admin-alert--error"><?= htmlspecialchars($error) ?></div>
+<?php endif; ?>
 
-    <?php if (isset($_GET['saved'])): ?>
-        <p class="form-note success">Settings saved.</p>
-    <?php endif; ?>
-    <?php if ($error): ?>
-        <p class="form-note error"><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
-
+<div class="admin-card">
     <form method="post" novalidate>
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
 
-        <p>Turn a menu off to hide its nav link and send anyone who visits the page directly back
-        to the home page. Nothing is deleted — flip it back on any time.</p>
+        <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-top: 0;">
+            Turn a menu off to hide its nav link and send anyone who visits the page directly back
+            to the home page. Nothing is deleted — flip it back on any time.
+        </p>
 
         <div class="admin-toggle-list">
             <?php foreach ($toggles as $key => $label): ?>
-                <label class="admin-toggle-row">
-                    <input type="checkbox" name="<?= htmlspecialchars($key) ?>" value="1" <?= !empty($current[$key]) ? 'checked' : '' ?>>
-                    <?= htmlspecialchars($label) ?>
+                <label class="admin-toggle-row" for="<?= htmlspecialchars($key) ?>">
+                    <span class="admin-toggle-row-label"><?= htmlspecialchars($label) ?></span>
+                    <span class="admin-switch">
+                        <input type="checkbox" id="<?= htmlspecialchars($key) ?>" name="<?= htmlspecialchars($key) ?>" value="1" <?= !empty($current[$key]) ? 'checked' : '' ?>>
+                        <span class="admin-switch-track"></span>
+                    </span>
                 </label>
             <?php endforeach; ?>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" style="margin-top: var(--space-3);">Save</button>
     </form>
 </div>
-</body>
-</html>
+
+<?php require __DIR__ . '/../includes/admin-footer.php'; ?>
