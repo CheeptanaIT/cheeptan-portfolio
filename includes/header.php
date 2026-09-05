@@ -1,6 +1,7 @@
 <?php
 $currentPage = $currentPage ?? 'home';
-$features = $features ?? require __DIR__ . '/features.php';
+require_once __DIR__ . '/features.php';
+$features = $features ?? get_features();
 ?>
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars($lang) ?>">
@@ -20,10 +21,12 @@ $features = $features ?? require __DIR__ . '/features.php';
             <li><a href="index.php#about"><?= htmlspecialchars($ui['nav_about']) ?></a></li>
             <li><a href="index.php#competencies"><?= htmlspecialchars($ui['nav_competencies']) ?></a></li>
             <li><a href="index.php#achievements"><?= htmlspecialchars($ui['nav_achievements']) ?></a></li>
-            <?php /* hidden for now: portfolio.php nav link (placeholder content)
+            <?php if (!empty($features['portfolio_enabled'])): ?>
             <li><a href="portfolio.php" class="<?= $currentPage === 'portfolio' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_portfolio']) ?></a></li>
-            */ ?>
+            <?php endif; ?>
+            <?php if (!empty($features['blog_enabled'])): ?>
             <li><a href="blog.php" class="<?= $currentPage === 'blog' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_blog']) ?></a></li>
+            <?php endif; ?>
             <?php if (!empty($features['services_enabled'])): ?>
             <li><a href="services.php" class="<?= $currentPage === 'services' ? 'is-active' : '' ?>"><?= htmlspecialchars($ui['nav_services']) ?></a></li>
             <?php endif; ?>

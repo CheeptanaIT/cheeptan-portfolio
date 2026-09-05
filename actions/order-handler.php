@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$features = require __DIR__ . '/../includes/features.php';
+require_once __DIR__ . '/../includes/features.php';
+$features = get_features();
 if (!$features['shop_enabled']) {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => $m['disabled']]);

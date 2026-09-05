@@ -28,6 +28,7 @@ $token = csrf_token();
         <a href="index.php" class="is-active">Blog Posts</a>
         <a href="services.php">Services</a>
         <a href="products.php">Products</a>
+        <a href="settings.php">Settings</a>
     </nav>
 
     <div class="admin-topbar">

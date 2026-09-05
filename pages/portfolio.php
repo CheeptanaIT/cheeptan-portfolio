@@ -1,6 +1,14 @@
 <?php
 require __DIR__ . '/../includes/lang.php';
 $lang = resolve_site_language();
+
+require_once __DIR__ . '/../includes/features.php';
+$features = get_features();
+if (!$features['portfolio_enabled']) {
+    header('Location: index.php');
+    exit;
+}
+
 $all = require __DIR__ . '/../config.php';
 $data = $all[$lang];
 $ui = $data['ui'];

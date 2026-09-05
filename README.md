@@ -45,7 +45,8 @@ actions/               Form submission endpoints (called via fetch() from assets
   contact-handler.php    Contact form submission endpoint
   order-handler.php      Shop checkout endpoint; re-validates item ids/prices against the
                           `products` table before emailing the order, ignoring client-sent values
-admin/                Password-protected CRUD for blog posts, services, and products
+admin/                Password-protected CRUD for blog posts, services, products, and the
+                      Blog/Services/Shop/Portfolio menu toggles (settings.php)
 assets/               CSS, JS, images
 schema.sql            MySQL schema + seed data for blog_posts, services, and products
 .github/workflows/    CI deploy workflow
@@ -53,18 +54,16 @@ schema.sql            MySQL schema + seed data for blog_posts, services, and pro
 
 ## Feature toggles
 
-Services and Shop can each be switched on/off independently in [includes/features.php](includes/features.php):
+Blog, Services, Shop, and Portfolio can each be switched on/off independently from
+**`/admin/settings.php`** — check a box, hit Save, no code change or deploy needed. Turning one off
+hides its nav link (Shop also controls the Cart link) and sends anyone who hits the page URL
+directly back to the home page; nothing is deleted, flip it back on any time.
 
-```php
-return [
-    'services_enabled' => true,
-    'shop_enabled' => true,
-];
-```
-
-Flip either to `false` when there isn't time to keep that side running — the nav link (and the
-`cart.php` link, tied to Shop) disappears, and hitting the page URL directly redirects to the
-home page. No code needs to be deleted; flip it back to `true` later.
+The toggles live in the `settings` table (see [schema.sql](schema.sql)), read through
+[includes/features.php](includes/features.php)'s `get_features()`. If the DB is unreachable or the
+table doesn't exist yet (e.g. before the migration below has run), it falls back to hardcoded
+defaults — Blog/Services/Shop on, Portfolio off — matching the site's behavior before this table
+existed, so a DB hiccup can't accidentally take down the whole nav.
 
 Service listings and shop products/prices live in MySQL (`services` and `products` tables) and are
 edited from `/admin/`, same as blog posts. Page chrome around them — the eyebrow/title/subtitle,
@@ -93,9 +92,10 @@ mysql -u root p1_home_blog < schema.sql
 
 ## Admin panel
 
-Blog posts, services, and products are all managed at `/admin/` (list, create, edit, delete for
-each — no public link, reached by typing the URL directly). It's protected by a single password,
-stored only as a hash via `ADMIN_PASSWORD_HASH` — never the plaintext. Generate it once with:
+Blog posts, services, products, and the menu toggles are all managed at `/admin/` (list, create,
+edit, delete for each — no public link, reached by typing the URL directly). It's protected by a
+single password, stored only as a hash via `ADMIN_PASSWORD_HASH` — never the plaintext. Generate it
+once with:
 
 ```bash
 php -r "echo password_hash('your-password', PASSWORD_DEFAULT), PHP_EOL;"

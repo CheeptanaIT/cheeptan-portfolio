@@ -2,7 +2,8 @@
 require __DIR__ . '/../includes/lang.php';
 $lang = resolve_site_language();
 
-$features = require __DIR__ . '/../includes/features.php';
+require_once __DIR__ . '/../includes/features.php';
+$features = get_features();
 if (!$features['services_enabled']) {
     header('Location: index.php');
     exit;

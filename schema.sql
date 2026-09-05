@@ -42,6 +42,21 @@ INSERT INTO blog_posts (slug, title_th, title_en, excerpt_th, excerpt_en, conten
     '2025-08-15 09:00:00'
 );
 
+-- สวิตช์เปิด/ปิดเมนู (Services/Shop/Blog/Portfolio) — จัดการผ่าน /admin/settings.php
+-- ปิดปุ่มไหน ลิงก์เมนูของหน้านั้นจะหายไปเอง และเข้า URL ตรงๆ จะถูกเด้งกลับหน้าแรก
+CREATE TABLE IF NOT EXISTS settings (
+    setting_key VARCHAR(60) NOT NULL PRIMARY KEY,
+    setting_value VARCHAR(20) NOT NULL DEFAULT '1',
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ค่าเริ่มต้นตรงกับพฤติกรรมเดิมของเว็บก่อนมีสวิตช์นี้ (Portfolio ถูกซ่อนอยู่แล้ว, ที่เหลือเปิดหมด)
+INSERT INTO settings (setting_key, setting_value) VALUES
+('services_enabled', '1'),
+('shop_enabled', '1'),
+('blog_enabled', '1'),
+('portfolio_enabled', '0');
+
 -- บริการ (หน้า services.php) — จัดการผ่าน /admin/services.php
 CREATE TABLE IF NOT EXISTS services (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

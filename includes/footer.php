@@ -12,8 +12,12 @@
                     <a href="index.php#about"><?= htmlspecialchars($ui['nav_about']) ?></a>
                     <a href="index.php#competencies"><?= htmlspecialchars($ui['nav_competencies']) ?></a>
                     <a href="index.php#achievements"><?= htmlspecialchars($ui['nav_achievements']) ?></a>
-                    <?php /* hidden for now: portfolio.php nav link (placeholder content) */ ?>
+                    <?php if (!empty($features['portfolio_enabled'])): ?>
+                    <a href="portfolio.php"><?= htmlspecialchars($ui['nav_portfolio']) ?></a>
+                    <?php endif; ?>
+                    <?php if (!empty($features['blog_enabled'])): ?>
                     <a href="blog.php"><?= htmlspecialchars($ui['nav_blog']) ?></a>
+                    <?php endif; ?>
                     <?php if (!empty($features['services_enabled'])): ?>
                     <a href="services.php"><?= htmlspecialchars($ui['nav_services']) ?></a>
                     <?php endif; ?>
