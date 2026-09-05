@@ -55,6 +55,7 @@ $token = csrf_token();
             <p class="form-note error"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
         <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        <a class="admin-login-back" href="../">&larr; Back to site</a>
     </form>
 </div>
 </body>

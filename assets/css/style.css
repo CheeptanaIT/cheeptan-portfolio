@@ -1002,6 +1002,11 @@ section:last-of-type {
 .footer-bottom {
     border-top: 1px solid var(--color-dark-border);
     padding: var(--space-2) 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
     text-align: center;
 }
 
@@ -1009,6 +1014,17 @@ section:last-of-type {
     margin: 0;
     color: var(--color-dark-text-muted);
     font-size: 0.8rem;
+}
+
+.footer-admin-link {
+    font-size: 0.75rem;
+    color: var(--color-dark-text-muted);
+    opacity: 0.6;
+}
+
+.footer-admin-link:hover {
+    color: var(--color-dark-text);
+    opacity: 1;
 }
 
 /* Scroll reveal */

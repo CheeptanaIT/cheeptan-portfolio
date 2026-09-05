@@ -194,6 +194,18 @@
     text-align: center;
 }
 
+.admin-login-back {
+    display: block;
+    text-align: center;
+    margin-top: var(--space-3);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.admin-login-back:hover {
+    color: var(--color-text);
+}
+
 /* Empty state */
 .admin-empty {
     text-align: center;

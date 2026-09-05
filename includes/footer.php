@@ -30,6 +30,7 @@
         </div>
         <div class="container footer-bottom">
             <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($data['site_name']) ?>. <?= htmlspecialchars($ui['footer_rights']) ?></p>
+            <a class="footer-admin-link" href="admin/">Admin</a>
         </div>
     </div>
 </footer>
