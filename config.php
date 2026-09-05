@@ -102,7 +102,7 @@ return [
         ],
 
         'socials' => [
-            ['label' => 'LinkedIn', 'short' => 'in', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlad-53944931b'],
+            ['label' => 'LinkedIn', 'short' => 'in', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlab-53944931b'],
             ['label' => 'GitHub', 'short' => 'gh', 'url' => 'https://github.com/cheeptana'],
             ['label' => 'Email', 'icon' => 'mail', 'url' => 'mailto:Cheeptana.boy@gmail.com'],
         ],
