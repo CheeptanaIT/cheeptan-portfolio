@@ -11,6 +11,7 @@
  *   $adminHeaderActions  raw HTML ของปุ่ม action ฝั่งขวาบน (เช่นปุ่ม "+ New post")
  */
 require_once __DIR__ . '/icons.php';
+require_once __DIR__ . '/assets.php';
 
 $adminNav = [
     'posts' => ['label' => 'Blog Posts', 'href' => 'index.php', 'icon' => 'document'],
@@ -26,8 +27,8 @@ $adminNav = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title><?= htmlspecialchars($adminTitle) ?> — Admin</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/style.css<?= asset_v('assets/css/style.css') ?>">
+    <link rel="stylesheet" href="../assets/css/admin.css<?= asset_v('assets/css/admin.css') ?>">
 </head>
 <body class="admin-body">
 <div class="admin-layout">

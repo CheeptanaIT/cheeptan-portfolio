@@ -2,6 +2,7 @@
 require __DIR__ . '/../includes/env.php';
 require __DIR__ . '/../includes/admin-auth.php';
 require __DIR__ . '/../includes/icons.php';
+require __DIR__ . '/../includes/assets.php';
 
 admin_session_start();
 
@@ -37,8 +38,8 @@ $token = csrf_token();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/style.css<?= asset_v('assets/css/style.css') ?>">
+    <link rel="stylesheet" href="../assets/css/admin.css<?= asset_v('assets/css/admin.css') ?>">
 </head>
 <body>
 <div class="admin-login-wrap">
