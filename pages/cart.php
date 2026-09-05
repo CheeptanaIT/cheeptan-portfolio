@@ -1,21 +1,21 @@
 <?php
-require __DIR__ . '/includes/lang.php';
+require __DIR__ . '/../includes/lang.php';
 $lang = resolve_site_language();
 
-$features = require __DIR__ . '/includes/features.php';
+$features = require __DIR__ . '/../includes/features.php';
 if (!$features['shop_enabled']) {
     header('Location: index.php');
     exit;
 }
 
-$all = require __DIR__ . '/config.php';
+$all = require __DIR__ . '/../config.php';
 $data = $all[$lang];
 $ui = $data['ui'];
 $shop = $data['shop'];
 $cart = $data['cart'];
 $currentPage = 'cart';
-require __DIR__ . '/includes/icons.php';
-require __DIR__ . '/includes/db.php';
+require __DIR__ . '/../includes/icons.php';
+require __DIR__ . '/../includes/db.php';
 
 // ให้ JS ฝั่ง client เอาไปจับคู่ id ใน localStorage กับชื่อ/ราคาสินค้าจริงจาก DB
 // (ไม่เชื่อราคาที่ localStorage เก็บไว้ตรงๆ เผื่อถูกแก้ไข)
@@ -33,7 +33,7 @@ try {
     // เหลือ $productsById ว่าง — cart.js จะกรองรายการที่จับคู่ไม่ได้ทิ้งไปเอง
 }
 
-require __DIR__ . '/includes/header.php';
+require __DIR__ . '/../includes/header.php';
 ?>
 
 <section class="page-hero">
@@ -119,4 +119,4 @@ require __DIR__ . '/includes/header.php';
     };
 </script>
 
-<?php require __DIR__ . '/includes/footer.php'; ?>
+<?php require __DIR__ . '/../includes/footer.php'; ?>

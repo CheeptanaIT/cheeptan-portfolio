@@ -34,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$features = require __DIR__ . '/includes/features.php';
+$features = require __DIR__ . '/../includes/features.php';
 if (!$features['shop_enabled']) {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => $m['disabled']]);
     exit;
 }
 
-$all = require __DIR__ . '/config.php';
+$all = require __DIR__ . '/../config.php';
 $data = $all[$lang];
 
 function clean_field(string $value): string
@@ -80,7 +80,7 @@ if (!is_array($cartItems) || count($cartItems) === 0) {
 }
 
 // สร้างรายการสินค้าจริงจาก DB เท่านั้น ไม่เชื่อชื่อ/ราคาที่ส่งมาจาก client (localStorage แก้ไขได้ง่าย)
-require __DIR__ . '/includes/db.php';
+require __DIR__ . '/../includes/db.php';
 $titleCol = $lang === 'en' ? 'title_en' : 'title_th';
 
 $requestedIds = [];
@@ -155,14 +155,14 @@ if ($note !== '') {
 $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 
-require __DIR__ . '/includes/env.php';
+require __DIR__ . '/../includes/env.php';
 $smtpHost = env_get('SMTP_HOST');
 
 if ($smtpHost) {
     // ใช้ SMTP จริง (เช่น Brevo) เมื่อตั้งค่า env ไว้ — จำเป็นบน host ที่ไม่มี mail() ในตัว
-    require __DIR__ . '/includes/PHPMailer/Exception.php';
-    require __DIR__ . '/includes/PHPMailer/PHPMailer.php';
-    require __DIR__ . '/includes/PHPMailer/SMTP.php';
+    require __DIR__ . '/../includes/PHPMailer/Exception.php';
+    require __DIR__ . '/../includes/PHPMailer/PHPMailer.php';
+    require __DIR__ . '/../includes/PHPMailer/SMTP.php';
 
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     try {

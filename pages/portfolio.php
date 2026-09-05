@@ -1,13 +1,13 @@
 <?php
-require __DIR__ . '/includes/lang.php';
+require __DIR__ . '/../includes/lang.php';
 $lang = resolve_site_language();
-$all = require __DIR__ . '/config.php';
+$all = require __DIR__ . '/../config.php';
 $data = $all[$lang];
 $ui = $data['ui'];
 $portfolio = $data['portfolio'];
 $currentPage = 'portfolio';
-require __DIR__ . '/includes/icons.php';
-require __DIR__ . '/includes/header.php';
+require __DIR__ . '/../includes/icons.php';
+require __DIR__ . '/../includes/header.php';
 ?>
 
 <section class="page-hero">
@@ -55,4 +55,4 @@ require __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<?php require __DIR__ . '/includes/footer.php'; ?>
+<?php require __DIR__ . '/../includes/footer.php'; ?>

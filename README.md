@@ -17,7 +17,7 @@ Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure &
 
 ## Tech stack
 
-- PHP 8, no framework — a single [config.php](config.php) drives page chrome/copy (nav labels, section text)
+- PHP 8, no framework — [config.php](config.php) merges [config/th.php](config/th.php) and [config/en.php](config/en.php), which drive page chrome/copy (nav labels, section text)
 - MySQL / MariaDB via PDO for Blog, Services, and Shop content
 - Vanilla CSS and JavaScript, no build step
 - [PHPMailer](includes/PHPMailer) for SMTP email delivery
@@ -25,17 +25,26 @@ Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure &
 
 ## Project structure
 
+Every URL on the site is unchanged (`/blog.php`, `/shop.php`, etc.) — the files behind them just
+live in subfolders now, grouped by responsibility. [.htaccess](.htaccess) (production/Apache) and
+[router.php](router.php) (local `php -S`) both rewrite those URLs to their real file location; see
+[Local development](#local-development) and [Deployment](#deployment) below.
+
 ```
-config.php            All site copy/content, split by language (th/en)
+config.php            Merges config/th.php + config/en.php for the page files to consume
+config/th.php         All Thai site copy/content
+config/en.php         All English site copy/content
 includes/             Shared layout (header/footer), language + DB helpers, icons, feature toggles
-index.php             Home page (hero, about, competencies, achievements, contact)
-portfolio.php         Portfolio / case studies page
-blog.php, blog-post.php  MySQL-backed blog listing and post detail
-services.php          MySQL-backed services list (freelance IT work), links out to the contact form
-shop.php, cart.php    MySQL-backed product listing, cart (localStorage), and checkout form
-contact-handler.php   Contact form submission endpoint
-order-handler.php     Shop checkout submission endpoint (emails the order, like contact-handler.php);
-                      re-validates item ids/prices against the `products` table, ignoring client-sent values
+pages/                One file per route — the actual URL still maps to the bare filename:
+  index.php             Home page (hero, about, competencies, achievements, contact) — also "/"
+  portfolio.php         Portfolio / case studies page
+  blog.php, blog-post.php  MySQL-backed blog listing and post detail
+  services.php          MySQL-backed services list (freelance IT work), links out to the contact form
+  shop.php, cart.php    MySQL-backed product listing, cart (localStorage), and checkout form
+actions/               Form submission endpoints (called via fetch() from assets/js/*.js)
+  contact-handler.php    Contact form submission endpoint
+  order-handler.php      Shop checkout endpoint; re-validates item ids/prices against the
+                          `products` table before emailing the order, ignoring client-sent values
 admin/                Password-protected CRUD for blog posts, services, and products
 assets/               CSS, JS, images
 schema.sql            MySQL schema + seed data for blog_posts, services, and products
@@ -66,8 +75,13 @@ emails/collects the request; it doesn't take payment or track stock.
 ## Local development
 
 ```bash
-php -S 127.0.0.1:8899
+php -S 127.0.0.1:8899 router.php
 ```
+
+`router.php` maps the site's plain URLs (`/blog.php`, `/cart.php`, ...) to their real location
+under `pages/`/`actions/`, the same way [.htaccess](.htaccess) does on the production Apache host.
+It's dev-only — don't skip the `router.php` argument, or every page will 404 — and is excluded from
+deploy since production doesn't need it.
 
 Blog, Services, and Shop all need a local MySQL/MariaDB server, with the database created first
 and the schema imported into it:

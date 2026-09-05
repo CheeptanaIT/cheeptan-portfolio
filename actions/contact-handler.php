@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$all = require __DIR__ . '/config.php';
+$all = require __DIR__ . '/../config.php';
 $data = $all[$lang];
 
 function clean_field(string $value): string
@@ -69,14 +69,14 @@ $body .= "Message:\n{$message}\n";
 $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 $fromAddress = 'no-reply@' . preg_replace('/[^a-zA-Z0-9\.\-]/', '', $host);
 
-require __DIR__ . '/includes/env.php';
+require __DIR__ . '/../includes/env.php';
 $smtpHost = env_get('SMTP_HOST');
 
 if ($smtpHost) {
     // ใช้ SMTP จริง (เช่น Brevo) เมื่อตั้งค่า env ไว้ — จำเป็นบน host ที่ไม่มี mail() ในตัว
-    require __DIR__ . '/includes/PHPMailer/Exception.php';
-    require __DIR__ . '/includes/PHPMailer/PHPMailer.php';
-    require __DIR__ . '/includes/PHPMailer/SMTP.php';
+    require __DIR__ . '/../includes/PHPMailer/Exception.php';
+    require __DIR__ . '/../includes/PHPMailer/PHPMailer.php';
+    require __DIR__ . '/../includes/PHPMailer/SMTP.php';
 
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     try {
