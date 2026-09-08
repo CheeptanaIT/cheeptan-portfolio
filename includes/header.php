@@ -9,8 +9,18 @@ $features = $features ?? get_features();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($data['site_title']) ?></title>
-    <meta name="description" content="<?= htmlspecialchars($data['hero']['tagline']) ?>">
+    <title><?= htmlspecialchars($pageTitle ?? $data['site_title']) ?></title>
+    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? $data['hero']['tagline']) ?>">
+    <?php
+    // canonical: URL ที่ขอจริง (ก่อน .htaccess rewrite ไปหาไฟล์ใน pages/) รวม query string
+    // เดิม (เช่น ?lang=en) เพราะเนื้อหาต่างกันจริงตามภาษา ไม่ใช่ duplicate content
+    $canonicalScheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $canonicalUrl = $canonicalScheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    ?>
+    <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+    <?php if (!empty($pageNoindex)): ?>
+    <meta name="robots" content="noindex, follow">
+    <?php endif; ?>
     <link rel="stylesheet" href="assets/css/style.css<?= asset_v('assets/css/style.css') ?>">
 </head>
 <body>

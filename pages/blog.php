@@ -35,6 +35,8 @@ try {
     $dbError = true;
 }
 
+$pageTitle = $blog['title'] . ' — ' . $data['site_name'];
+$pageDescription = $blog['subtitle'];
 require __DIR__ . '/../includes/header.php';
 ?>
 

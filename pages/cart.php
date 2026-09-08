@@ -34,6 +34,10 @@ try {
     // เหลือ $productsById ว่าง — cart.js จะกรองรายการที่จับคู่ไม่ได้ทิ้งไปเอง
 }
 
+$pageTitle = $cart['title'] . ' — ' . $data['site_name'];
+// ตะกร้าเป็นข้อมูลส่วนตัวต่อผู้ใช้ (เก็บใน localStorage ของแต่ละเครื่อง) ไม่มีเนื้อหาให้ Google
+// ทำดัชนี และ Googlebot จะเห็นแต่ตะกร้าว่างเสมอ กันไม่ให้ขึ้นในผลค้นหา
+$pageNoindex = true;
 require __DIR__ . '/../includes/header.php';
 ?>
 

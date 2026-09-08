@@ -14,6 +14,8 @@ $data = $all[$lang];
 $ui = $data['ui'];
 $portfolio = $data['portfolio'];
 $currentPage = 'portfolio';
+$pageTitle = $portfolio['title'] . ' — ' . $data['site_name'];
+$pageDescription = $portfolio['subtitle'];
 require __DIR__ . '/../includes/icons.php';
 require __DIR__ . '/../includes/header.php';
 ?>

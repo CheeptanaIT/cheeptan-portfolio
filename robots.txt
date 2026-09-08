@@ -1,2 +1,5 @@
 User-agent: *
 Disallow: /admin/
+Disallow: /actions/
+
+Sitemap: https://cheeptana.infinityfree.io/sitemap.php

@@ -35,6 +35,8 @@ try {
     $dbError = true;
 }
 
+$pageTitle = $shop['title'] . ' — ' . $data['site_name'];
+$pageDescription = $shop['subtitle'];
 require __DIR__ . '/../includes/header.php';
 ?>
 

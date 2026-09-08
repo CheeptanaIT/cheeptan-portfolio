@@ -36,6 +36,8 @@ try {
     $dbError = true;
 }
 
+$pageTitle = $services['title'] . ' — ' . $data['site_name'];
+$pageDescription = $services['subtitle'];
 require __DIR__ . '/../includes/header.php';
 ?>
 

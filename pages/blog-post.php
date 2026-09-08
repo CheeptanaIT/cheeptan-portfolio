@@ -18,6 +18,7 @@ require __DIR__ . '/../includes/icons.php';
 require_once __DIR__ . '/../includes/db.php';
 
 $titleCol = $lang === 'en' ? 'title_en' : 'title_th';
+$excerptCol = $lang === 'en' ? 'excerpt_en' : 'excerpt_th';
 $contentCol = $lang === 'en' ? 'content_en' : 'content_th';
 
 $slug = $_GET['slug'] ?? '';
@@ -26,7 +27,7 @@ $dbError = false;
 
 try {
     $stmt = get_db()->prepare(
-        "SELECT slug, {$titleCol} AS title, {$contentCol} AS content, published_at
+        "SELECT slug, {$titleCol} AS title, {$excerptCol} AS excerpt, {$contentCol} AS content, published_at
          FROM blog_posts
          WHERE slug = :slug AND status = 'published'
          LIMIT 1"
@@ -36,6 +37,14 @@ try {
     $post = $post ?: null;
 } catch (PDOException $e) {
     $dbError = true;
+}
+
+if ($post) {
+    $pageTitle = $post['title'] . ' — ' . $data['site_name'];
+    $pageDescription = $post['excerpt'];
+} else {
+    // ไม่พบบทความ/โหลดไม่ได้ — กัน Google ทำดัชนีหน้า error/not-found
+    $pageNoindex = true;
 }
 
 require __DIR__ . '/../includes/header.php';
