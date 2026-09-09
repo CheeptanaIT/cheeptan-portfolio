@@ -224,7 +224,7 @@ return [
     'services' => [
         'eyebrow' => 'Services',
         'title' => 'Services',
-        'subtitle' => 'IT Infrastructure work taken on outside regular employment. Reach out directly to discuss scope and pricing.',
+        'subtitle' => 'IT Infrastructure work taken on outside regular employment, serving the Taling Chan and Ratchaphruek area of Bangkok. Reach out directly to discuss scope and pricing.',
         'back_to_home' => 'Back to Home',
         'price_prefix' => 'Starting at',
         'cta_label' => 'Inquire / Hire',
