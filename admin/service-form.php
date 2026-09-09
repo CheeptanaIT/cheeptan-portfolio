@@ -3,11 +3,12 @@ require __DIR__ . '/../includes/env.php';
 require __DIR__ . '/../includes/admin-auth.php';
 require_admin();
 require __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/indexnow.php';
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_POST['id']) ? (int) $_POST['id'] : null);
 $isEdit = !empty($id);
 
-$icons = ['server', 'shield', 'database', 'mail', 'folder', 'document', 'cart', 'tag'];
+$icons =['server', 'shield', 'database', 'mail', 'folder', 'document', 'cart', 'tag'];
 
 $item = [
     'icon' => 'server',
@@ -93,6 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'is_active' => $item['is_active'],
                         'sort_order' => $item['sort_order'],
                     ]);
+                }
+                if ($item['is_active']) {
+                    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+                    indexnow_notify([$scheme . '://' . $_SERVER['HTTP_HOST'] . '/services.php']);
                 }
                 header('Location: services.php?saved=1');
                 exit;

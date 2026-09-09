@@ -4,6 +4,7 @@ require __DIR__ . '/../includes/admin-auth.php';
 require_admin();
 require __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/features.php';
+require_once __DIR__ . '/../includes/indexnow.php';
 
 $toggles = [
     'blog_enabled' => 'Blog',
@@ -29,6 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'value' => isset($_POST[$key]) ? '1' : '0',
                 ]);
             }
+            $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $base = $scheme . '://' . $_SERVER['HTTP_HOST'];
+            // เปิด/ปิดเมนูกระทบหน้าแรก (นำทาง) และ sitemap (รายการ URL) เลยแจ้งทั้งคู่
+            indexnow_notify([$base . '/', $base . '/sitemap.php']);
             header('Location: settings.php?saved=1');
             exit;
         } catch (PDOException $e) {

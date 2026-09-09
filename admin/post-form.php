@@ -3,6 +3,7 @@ require __DIR__ . '/../includes/env.php';
 require __DIR__ . '/../includes/admin-auth.php';
 require_admin();
 require __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/indexnow.php';
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_POST['id']) ? (int) $_POST['id'] : null);
 $isEdit = !empty($id);
@@ -99,6 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'content_en' => $post['content_en'],
                         'status' => $post['status'],
                         'published_at' => $publishedAt,
+                    ]);
+                }
+                if ($post['status'] === 'published') {
+                    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+                    $base = $scheme . '://' . $_SERVER['HTTP_HOST'];
+                    indexnow_notify([
+                        $base . '/blog.php',
+                        $base . '/blog-post.php?slug=' . urlencode($post['slug']),
                     ]);
                 }
                 header('Location: index.php?saved=1');
