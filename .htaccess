@@ -1,11 +1,10 @@
 # URL ของเว็บยังเหมือนเดิมทุกอย่าง (เช่น /blog.php, /shop.php?...) — ไฟล์จริงถูกย้ายไปไว้ใน
 # pages/ และ actions/ แล้วเพื่อความเป็นระเบียบ กฎด้านล่างแค่ชี้ request ไปหาไฟล์ที่ย้ายไป
 # (internal rewrite ไม่ใช่ redirect ตัว browser เห็น URL เดิมเป๊ะ ไม่กระทบ SEO/bookmark/ลิงก์เก่า)
+#
+# ข้อยกเว้น: index.php อยู่ที่ root จริงๆ (ไม่ได้ย้ายเข้า pages/) เพื่อให้ Apache/Googlebot
+# เจอไฟล์ตรงๆ ทันทีที่ "/" โดยไม่ต้องพึ่ง rewrite rule เลย — ลด dependency ของหน้าแรกที่สำคัญที่สุด
 RewriteEngine On
-
-# หน้าแรก: "/" และ "/index.php"
-RewriteRule ^$ pages/index.php [L]
-RewriteRule ^index\.php$ pages/index.php [L]
 
 # หน้าอื่นๆ ที่เคยอยู่ที่ root
 RewriteRule ^(portfolio|blog|blog-post|services|shop|cart)\.php$ pages/$1.php [L]

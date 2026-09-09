@@ -11,8 +11,6 @@
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $routes = [
-    '/' => '/pages/index.php',
-    '/index.php' => '/pages/index.php',
     '/portfolio.php' => '/pages/portfolio.php',
     '/blog.php' => '/pages/blog.php',
     '/blog-post.php' => '/pages/blog-post.php',
@@ -22,6 +20,11 @@ $routes = [
     '/contact-handler.php' => '/actions/contact-handler.php',
     '/order-handler.php' => '/actions/order-handler.php',
 ];
+
+if ($uri === '/') {
+    require __DIR__ . '/index.php';
+    return true;
+}
 
 if (isset($routes[$uri])) {
     require __DIR__ . $routes[$uri];
