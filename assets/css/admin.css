@@ -353,6 +353,21 @@
     font-size: 0.95rem;
 }
 
+/* Radio choice rows (e.g. product type in product-form.php) */
+.admin-radio-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-top: var(--space-2);
+    cursor: pointer;
+}
+
+.admin-radio-row input {
+    accent-color: var(--color-rusty-spice-500, currentColor);
+}
+
 .admin-switch {
     position: relative;
     display: inline-block;

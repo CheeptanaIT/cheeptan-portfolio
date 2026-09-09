@@ -111,6 +111,8 @@ INSERT INTO services (icon, title_th, title_en, description_th, description_en, 
 
 -- สินค้า (หน้า shop.php/cart.php) — จัดการผ่าน /admin/products.php
 -- ราคาเป็นตัวเลขเดียวใช้ร่วมกันทั้งสองภาษา (สกุลเงินกำหนดแยกไว้ใน config.php)
+-- product_type = 'direct'   สินค้าจริงที่ขายผ่านเว็บนี้ — ลูกค้าใส่ตะกร้าแล้วส่งคำสั่งซื้อมายืนยัน (เดิม)
+-- product_type = 'external' แค่ประกาศไว้ในนี้ กดแล้วออกไปซื้อที่เว็บ/ร้านอื่น (external_url) ไม่ผ่านตะกร้าเลย
 CREATE TABLE IF NOT EXISTS products (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title_th VARCHAR(255) NOT NULL,
@@ -119,6 +121,8 @@ CREATE TABLE IF NOT EXISTS products (
     description_en TEXT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     tags VARCHAR(255) NOT NULL DEFAULT '',
+    product_type ENUM('direct', 'external') NOT NULL DEFAULT 'direct',
+    external_url VARCHAR(500) NOT NULL DEFAULT '',
     is_active TINYINT(1) NOT NULL DEFAULT 1,
     sort_order INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

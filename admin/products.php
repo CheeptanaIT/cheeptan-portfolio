@@ -5,7 +5,7 @@ require_admin();
 require __DIR__ . '/../includes/db.php';
 
 $items = get_db()->query(
-    "SELECT id, title_th, price, is_active
+    "SELECT id, title_th, price, product_type, is_active
      FROM products
      ORDER BY sort_order ASC, id ASC"
 )->fetchAll();
@@ -34,6 +34,7 @@ require __DIR__ . '/../includes/admin-header.php';
                 <tr>
                     <th>Title (TH)</th>
                     <th>Price</th>
+                    <th>Sold via</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -43,6 +44,11 @@ require __DIR__ . '/../includes/admin-header.php';
                     <tr>
                         <td><?= htmlspecialchars($item['title_th']) ?></td>
                         <td><?= number_format((float) $item['price'], 2) ?></td>
+                        <td>
+                            <span class="admin-badge <?= $item['product_type'] === 'external' ? 'draft' : 'published' ?>">
+                                <?= $item['product_type'] === 'external' ? 'external link' : 'this site' ?>
+                            </span>
+                        </td>
                         <td>
                             <span class="admin-badge <?= $item['is_active'] ? 'published' : 'draft' ?>">
                                 <?= $item['is_active'] ? 'active' : 'hidden' ?>

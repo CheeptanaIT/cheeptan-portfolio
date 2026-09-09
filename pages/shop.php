@@ -25,7 +25,7 @@ $dbError = false;
 
 try {
     $stmt = get_db()->query(
-        "SELECT id, {$titleCol} AS title, {$descCol} AS description, price, tags
+        "SELECT id, {$titleCol} AS title, {$descCol} AS description, price, tags, product_type, external_url
          FROM products
          WHERE is_active = 1
          ORDER BY sort_order ASC, id ASC"
@@ -72,12 +72,21 @@ require __DIR__ . '/../includes/header.php';
                         <?php endif; ?>
                         <div class="shop-card-footer">
                             <span class="shop-price"><?= number_format((float) $item['price']) ?> <?= htmlspecialchars($shop['currency']) ?></span>
-                            <button
-                                type="button"
-                                class="btn btn-primary btn-sm add-to-cart-btn"
-                                data-id="<?= (int) $item['id'] ?>"
-                                data-added-text="<?= htmlspecialchars($shop['added_to_cart']) ?>"
-                            ><?= htmlspecialchars($shop['add_to_cart']) ?></button>
+                            <?php if ($item['product_type'] === 'external'): ?>
+                                <a
+                                    class="btn btn-outline btn-sm"
+                                    href="<?= htmlspecialchars($item['external_url']) ?>"
+                                    target="_blank"
+                                    rel="noopener nofollow"
+                                ><?= htmlspecialchars($shop['external_cta']) ?></a>
+                            <?php else: ?>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary btn-sm add-to-cart-btn"
+                                    data-id="<?= (int) $item['id'] ?>"
+                                    data-added-text="<?= htmlspecialchars($shop['added_to_cart']) ?>"
+                                ><?= htmlspecialchars($shop['add_to_cart']) ?></button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>

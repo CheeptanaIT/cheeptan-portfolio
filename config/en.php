@@ -244,6 +244,7 @@ return [
         'back_to_home' => 'Back to Home',
         'add_to_cart' => 'Add to Cart',
         'added_to_cart' => 'Added ✓',
+        'external_cta' => 'View on other store',
         'currency' => 'THB',
         'error_state' => 'Unable to load products right now. Please try again later.',
         'empty_state' => 'No products for sale right now.',

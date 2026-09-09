@@ -15,6 +15,8 @@ $item = [
     'description_en' => '',
     'price' => '',
     'tags' => '',
+    'product_type' => 'direct',
+    'external_url' => '',
     'is_active' => 1,
     'sort_order' => 0,
 ];
@@ -36,10 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_check($_POST['csrf_token'] ?? null)) {
         $error = 'Session expired, please try again.';
     } else {
-        foreach (['title_th', 'title_en', 'description_th', 'description_en', 'tags'] as $key) {
+        foreach (['title_th', 'title_en', 'description_th', 'description_en', 'tags', 'external_url'] as $key) {
             $item[$key] = trim($_POST[$key] ?? '');
         }
         $item['price'] = trim($_POST['price'] ?? '');
+        $item['product_type'] = ($_POST['product_type'] ?? '') === 'external' ? 'external' : 'direct';
         $item['is_active'] = isset($_POST['is_active']) ? 1 : 0;
         $item['sort_order'] = (int) ($_POST['sort_order'] ?? 0);
 
@@ -50,14 +53,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Please fill in all required fields.';
         } elseif (!is_numeric($item['price']) || (float) $item['price'] < 0) {
             $error = 'Price must be a non-negative number.';
+        } elseif ($item['product_type'] === 'external' && !preg_match('#^https?://#i', $item['external_url'])) {
+            $error = 'External products need a valid link starting with http:// or https://';
         } else {
             $price = round((float) $item['price'], 2);
             try {
+                // สินค้าแบบ external ไม่ผ่านตะกร้าเลย เก็บ external_url ไว้เฉพาะตอนเป็น external
+                // เผื่อ admin สลับกลับไป direct ทีหลังแล้วลิงก์เก่ายังค้าง จะได้ไม่ใช้งานผิดที่ผิดทาง
+                $externalUrl = $item['product_type'] === 'external' ? $item['external_url'] : '';
+
                 if ($isEdit) {
                     $stmt = get_db()->prepare(
                         'UPDATE products SET title_th = :title_th, title_en = :title_en,
                          description_th = :description_th, description_en = :description_en,
-                         price = :price, tags = :tags, is_active = :is_active, sort_order = :sort_order
+                         price = :price, tags = :tags, product_type = :product_type, external_url = :external_url,
+                         is_active = :is_active, sort_order = :sort_order
                          WHERE id = :id'
                     );
                     $stmt->execute([
@@ -67,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'description_en' => $item['description_en'],
                         'price' => $price,
                         'tags' => $item['tags'],
+                        'product_type' => $item['product_type'],
+                        'external_url' => $externalUrl,
                         'is_active' => $item['is_active'],
                         'sort_order' => $item['sort_order'],
                         'id' => $id,
@@ -74,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $stmt = get_db()->prepare(
                         'INSERT INTO products
-                         (title_th, title_en, description_th, description_en, price, tags, is_active, sort_order)
-                         VALUES (:title_th, :title_en, :description_th, :description_en, :price, :tags, :is_active, :sort_order)'
+                         (title_th, title_en, description_th, description_en, price, tags, product_type, external_url, is_active, sort_order)
+                         VALUES (:title_th, :title_en, :description_th, :description_en, :price, :tags, :product_type, :external_url, :is_active, :sort_order)'
                     );
                     $stmt->execute([
                         'title_th' => $item['title_th'],
@@ -84,6 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'description_en' => $item['description_en'],
                         'price' => $price,
                         'tags' => $item['tags'],
+                        'product_type' => $item['product_type'],
+                        'external_url' => $externalUrl,
                         'is_active' => $item['is_active'],
                         'sort_order' => $item['sort_order'],
                     ]);
@@ -150,6 +164,24 @@ require __DIR__ . '/../includes/admin-header.php';
             <div class="form-group">
                 <label for="description_en">Description (EN)</label>
                 <textarea id="description_en" name="description_en" required><?= htmlspecialchars($item['description_en']) ?></textarea>
+            </div>
+        </div>
+
+        <div class="admin-form-grid">
+            <div class="form-group">
+                <label>Where is this sold?</label>
+                <label class="admin-radio-row">
+                    <input type="radio" name="product_type" value="direct" <?= $item['product_type'] !== 'external' ? 'checked' : '' ?>>
+                    On this site (customer adds to cart, then contacts to confirm)
+                </label>
+                <label class="admin-radio-row">
+                    <input type="radio" name="product_type" value="external" <?= $item['product_type'] === 'external' ? 'checked' : '' ?>>
+                    On another site (button just links out, no cart)
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="external_url">Link to the other site (required if "On another site")</label>
+                <input type="url" id="external_url" name="external_url" placeholder="https://..." value="<?= htmlspecialchars($item['external_url']) ?>">
             </div>
         </div>
 

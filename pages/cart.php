@@ -23,7 +23,9 @@ require_once __DIR__ . '/../includes/db.php';
 $titleCol = $lang === 'en' ? 'title_en' : 'title_th';
 $productsById = [];
 try {
-    $stmt = get_db()->query("SELECT id, {$titleCol} AS title, price FROM products WHERE is_active = 1");
+    // สินค้าแบบ external ไม่มีทางถูกใส่ตะกร้าได้จริง (ปุ่มของมันเป็นแค่ลิงก์ออกไป ไม่มี add-to-cart-btn เลย)
+    // กันไว้อีกชั้นตรงนี้เผื่อ id เก่าค้างใน localStorage จากตอนที่ยังเป็น direct แล้วสลับเป็น external ทีหลัง
+    $stmt = get_db()->query("SELECT id, {$titleCol} AS title, price FROM products WHERE is_active = 1 AND product_type = 'direct'");
     foreach ($stmt->fetchAll() as $row) {
         $productsById[(string) $row['id']] = [
             'title' => $row['title'],
