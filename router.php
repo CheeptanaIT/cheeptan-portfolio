@@ -19,6 +19,7 @@ $routes = [
     '/cart.php' => '/pages/cart.php',
     '/contact-handler.php' => '/actions/contact-handler.php',
     '/order-handler.php' => '/actions/order-handler.php',
+    '/llms.txt' => '/llms.php',
 ];
 
 if ($uri === '/') {

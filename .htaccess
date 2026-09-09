@@ -11,3 +11,6 @@ RewriteRule ^(portfolio|blog|blog-post|services|shop|cart)\.php$ pages/$1.php [L
 
 # ปลายทางฟอร์ม (เรียกผ่าน fetch() จาก assets/js/*.js)
 RewriteRule ^(contact-handler|order-handler)\.php$ actions/$1.php [L]
+
+# llms.txt (มาตรฐาน llmstxt.org) ต้องอยู่ที่ path นี้เป๊ะๆ — เนื้อหาจริง generate จาก llms.php
+RewriteRule ^llms\.txt$ llms.php [L]
