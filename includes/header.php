@@ -9,8 +9,14 @@ $features = $features ?? get_features();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php
+    // description เริ่มต้น (หน้าแรก/หน้าที่ไม่ได้ตั้ง $pageDescription เอง) ต้องระบุชื่อ-นามสกุล
+    // และสายงานให้ชัดเจนในตัว meta เอง ไม่ใช่พึ่งแค่ tagline ที่โชว์บนหน้าเว็บอย่างเดียว
+    // เพราะเวลามีคนเสิร์ชชื่อเรา อยากให้ผลลัพธ์บอกได้ทันทีว่าเป็นใครทำงานสายไหน
+    $defaultDescription = $data['hero']['name'] . ' — ' . $data['hero']['role'] . '. ' . $data['hero']['tagline'];
+    ?>
     <title><?= htmlspecialchars($pageTitle ?? $data['site_title']) ?></title>
-    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? $data['hero']['tagline']) ?>">
+    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? $defaultDescription) ?>">
     <?php
     // canonical: URL ที่ขอจริง (ก่อน .htaccess rewrite ไปหาไฟล์ใน pages/) รวม query string
     // เดิม (เช่น ?lang=en) เพราะเนื้อหาต่างกันจริงตามภาษา ไม่ใช่ duplicate content
