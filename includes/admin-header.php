@@ -35,10 +35,10 @@ $adminNav = [
     <aside class="admin-sidebar">
         <div class="admin-sidebar-brand">Cheeptan <span>Admin</span></div>
         <nav class="admin-sidebar-nav">
-            <?php foreach ($adminNav as $key => $item): ?>
-                <a href="<?= htmlspecialchars($item['href']) ?>" class="admin-nav-link <?= $adminActive === $key ? 'is-active' : '' ?>">
-                    <?= icon($item['icon']) ?>
-                    <span><?= htmlspecialchars($item['label']) ?></span>
+            <?php foreach ($adminNav as $navKey => $navItem): ?>
+                <a href="<?= htmlspecialchars($navItem['href']) ?>" class="admin-nav-link <?= $adminActive === $navKey ? 'is-active' : '' ?>">
+                    <?= icon($navItem['icon']) ?>
+                    <span><?= htmlspecialchars($navItem['label']) ?></span>
                 </a>
             <?php endforeach; ?>
         </nav>
