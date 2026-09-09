@@ -14,6 +14,10 @@ return [
         'name_th' => null,
         'role' => 'IT Infrastructure & System Specialist',
         'tagline' => 'Managing Core Infrastructure, Virtualization, and Network Security for 200+ Enterprise Users with High Availability and Zero Unplanned Downtime.',
+        // Kept separate from the tagline above — the tagline can run as long as it wants on
+        // the page itself, but the meta description needs to stay ~120-160 characters per SEO
+        // convention (too long gets flagged, and Google may just truncate it mid-word in SERPs)
+        'meta_description' => 'Cheeptan Yenlad — IT Infrastructure & System Specialist. Managing Infrastructure, Virtualization, and Network Security for 200+ users, zero downtime.',
         'badge' => '1+ Yr Experience',
         'cta_primary' => 'View My Infrastructure Achievements',
         'cta_secondary' => 'Contact Me',

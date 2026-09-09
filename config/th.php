@@ -14,6 +14,10 @@ return [
         'name_th' => 'นายชีพธนา เย็นลับ',
         'role' => 'IT Infrastructure & System Specialist',
         'tagline' => 'ดูแลระบบ Infrastructure หลัก, Virtualization และ Network Security ให้ผู้ใช้งานกว่า 200 คน ด้วยความเสถียรสูงและไม่มี Downtime ที่ไม่ได้วางแผนไว้',
+        // ใช้แยกจาก tagline ข้างบนโดยเฉพาะ — tagline ยาวเต็มที่ไว้โชว์บนหน้าเว็บได้ แต่
+        // meta description ต้องกระชับ ~120-160 ตัวอักษรตามมาตรฐาน SEO (ยาวไปจะโดน flag ว่า
+        // "too long" และ Google อาจตัดกลางคำตอนแสดงผลใน SERP)
+        'meta_description' => 'Cheeptan Yenlad — IT Infrastructure & System Specialist ดูแลระบบ Infrastructure, Virtualization, Network Security ให้ผู้ใช้งาน 200+ คน High Availability',
         'badge' => '1+ ปีประสบการณ์',
         'cta_primary' => 'ดูผลงานด้าน Infrastructure',
         'cta_secondary' => 'ติดต่อฉัน',
