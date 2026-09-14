@@ -17,7 +17,7 @@ return [
         // ใช้แยกจาก tagline ข้างบนโดยเฉพาะ — tagline ยาวเต็มที่ไว้โชว์บนหน้าเว็บได้ แต่
         // meta description ต้องกระชับ ~120-160 ตัวอักษรตามมาตรฐาน SEO (ยาวไปจะโดน flag ว่า
         // "too long" และ Google อาจตัดกลางคำตอนแสดงผลใน SERP)
-        'meta_description' => 'Cheeptan Yenlad — IT Infrastructure & System Specialist ดูแลระบบ Infrastructure, Virtualization, Network Security ให้ผู้ใช้งาน 200+ คน High Availability',
+        'meta_description' => 'ชีพธนา เย็นลับ — IT Infrastructure & System Specialist ประจำตลิ่งชัน ราชพฤกษ์ กรุงเทพฯ ดูแลระบบ Infrastructure, Network Security ให้ผู้ใช้งาน 200+ คน',
         'badge' => '1+ ปีประสบการณ์',
         'cta_primary' => 'ดูผลงานด้าน Infrastructure',
         'cta_secondary' => 'ติดต่อฉัน',
@@ -29,7 +29,7 @@ return [
     ],
 
     'about' => [
-        'text' => 'IT Professional ที่มีความเชี่ยวชาญด้าน IT Infrastructure, Virtualization และ Network Security มีประสบการณ์ดูแลและบริหารจัดการระบบไอทีให้รองรับผู้ใช้งานมากกว่า 200 ราย มุ่งเน้นการออกแบบระบบที่มีความเสถียร (High Availability) การบริหารจัดการความปลอดภัยของข้อมูล และการจัดทำระบบ Backup & Recovery เพื่อให้ธุรกิจดำเนินได้อย่างต่อเนื่องไม่มีสะดุด',
+        'text' => 'ชีพธนา เย็นลับ (Cheeptan Yenlad) IT Professional ประจำอยู่ที่ตลิ่งชัน ราชพฤกษ์ กรุงเทพฯ ที่มีความเชี่ยวชาญด้าน IT Infrastructure, Virtualization และ Network Security มีประสบการณ์ดูแลและบริหารจัดการระบบไอทีให้รองรับผู้ใช้งานมากกว่า 200 ราย มุ่งเน้นการออกแบบระบบที่มีความเสถียร (High Availability) การบริหารจัดการความปลอดภัยของข้อมูล และการจัดทำระบบ Backup & Recovery เพื่อให้ธุรกิจดำเนินได้อย่างต่อเนื่องไม่มีสะดุด',
         'email' => 'Cheeptana.boy@gmail.com',
         'phone' => '096-770-7287',
         'location' => 'ตลิ่งชัน กรุงเทพฯ, ประเทศไทย',
