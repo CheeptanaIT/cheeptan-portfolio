@@ -1,8 +1,23 @@
-# Cheeptan Portfolio
+<div align="center">
 
-Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure & Operations Specialist.
+# 💼 Cheeptan Portfolio
 
-**Live site:** [cheeptana.infinityfree.io](http://cheeptana.infinityfree.io/)
+Personal portfolio / resume site for **Cheeptan Yenlad** — IT Infrastructure & Operations Specialist
+
+[![Live](https://img.shields.io/badge/Live-cheeptana.infinityfree.io-2ea44f?style=flat-square)](http://cheeptana.infinityfree.io/)
+[![Deploy](https://github.com/CheeptanaIT/cheeptan-portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/CheeptanaIT/cheeptan-portfolio/actions/workflows/deploy.yml)
+[![PHP](https://img.shields.io/badge/PHP-8-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-MariaDB-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com)
+[![Bilingual](https://img.shields.io/badge/Language-TH%20%7C%20EN-blue?style=flat-square)]()
+
+</div>
+
+## Table of contents
+
+[Features](#features) · [Tech stack](#tech-stack) · [Project structure](#project-structure) · [Feature toggles](#feature-toggles) · [Local development](#local-development) · [Admin panel](#admin-panel) · [Deployment](#deployment) · [License](#license)
+
+---
+
 
 ## Features
 
