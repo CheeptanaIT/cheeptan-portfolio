@@ -35,6 +35,11 @@ try {
     $dbError = true;
 }
 
+// บทความล่าสุดเป็นการ์ดใหญ่ 1 ใบ, ถัดไปอีก 4 ใบเป็นลิสต์, ที่เหลือเป็น grid
+$featured = $posts[0] ?? null;
+$listPosts = array_slice($posts, 1, 4);
+$olderPosts = array_slice($posts, 5);
+
 $pageTitle = $blog['title'] . ' — ' . $data['site_name'];
 $pageDescription = $blog['subtitle'];
 require __DIR__ . '/../includes/header.php';
@@ -56,16 +61,44 @@ require __DIR__ . '/../includes/header.php';
         <?php elseif (empty($posts)): ?>
             <p class="blog-state"><?= htmlspecialchars($blog['empty_state']) ?></p>
         <?php else: ?>
-            <div class="blog-grid">
-                <?php foreach ($posts as $i => $post): ?>
-                    <a class="blog-card reveal" href="blog-post.php?slug=<?= urlencode($post['slug']) ?>" style="--reveal-delay: <?= $i * 70 ?>ms">
-                        <span class="blog-card-date"><?= htmlspecialchars(date('d M Y', strtotime($post['published_at']))) ?></span>
-                        <h3 class="blog-card-title"><?= htmlspecialchars($post['title']) ?></h3>
-                        <p class="blog-card-excerpt"><?= htmlspecialchars($post['excerpt']) ?></p>
-                        <span class="blog-card-link"><?= htmlspecialchars($blog['read_more']) ?> &rarr;</span>
-                    </a>
-                <?php endforeach; ?>
+            <div class="blog-split">
+                <a class="blog-featured reveal" href="blog-post.php?slug=<?= urlencode($featured['slug']) ?>">
+                    <div>
+                        <span class="blog-card-date"><?= htmlspecialchars($blog['latest_label']) ?> · <?= htmlspecialchars(date('d M Y', strtotime($featured['published_at']))) ?></span>
+                        <h2 class="blog-featured-title"><?= htmlspecialchars($featured['title']) ?></h2>
+                    </div>
+                    <p class="blog-featured-excerpt"><?= htmlspecialchars($featured['excerpt']) ?></p>
+                    <span class="blog-card-link"><?= htmlspecialchars($blog['read_more']) ?> <?= icon('arrow-right') ?></span>
+                </a>
+
+                <?php if ($listPosts): ?>
+                    <ul class="blog-list">
+                        <?php foreach ($listPosts as $post): ?>
+                            <li>
+                                <a class="blog-list-item" href="blog-post.php?slug=<?= urlencode($post['slug']) ?>">
+                                    <span class="blog-card-date"><?= htmlspecialchars(date('d M Y', strtotime($post['published_at']))) ?></span>
+                                    <span class="blog-list-name"><?= htmlspecialchars($post['title']) ?></span>
+                                    <span class="blog-list-arrow" aria-hidden="true"><?= icon('arrow-right') ?></span>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </div>
+
+            <?php if ($olderPosts): ?>
+                <h2 class="blog-subtitle"><?= htmlspecialchars($blog['more_posts_title']) ?></h2>
+                <div class="blog-grid">
+                    <?php foreach ($olderPosts as $i => $post): ?>
+                        <a class="blog-card reveal" href="blog-post.php?slug=<?= urlencode($post['slug']) ?>" style="--reveal-delay: <?= $i * 70 ?>ms">
+                            <span class="blog-card-date"><?= htmlspecialchars(date('d M Y', strtotime($post['published_at']))) ?></span>
+                            <h3 class="blog-card-title"><?= htmlspecialchars($post['title']) ?></h3>
+                            <p class="blog-card-excerpt"><?= htmlspecialchars($post['excerpt']) ?></p>
+                            <span class="blog-card-link"><?= htmlspecialchars($blog['read_more']) ?> <?= icon('arrow-right') ?></span>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </section>

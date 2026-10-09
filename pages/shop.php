@@ -58,35 +58,41 @@ require __DIR__ . '/../includes/header.php';
         <?php else: ?>
             <div class="shop-grid">
                 <?php foreach ($items as $i => $item): ?>
+                    <?php $isExternal = $item['product_type'] === 'external'; ?>
                     <div class="shop-card reveal" style="--reveal-delay: <?= $i * 70 ?>ms">
-                        <div class="shop-card-icon"><?= icon('tag') ?></div>
-                        <h3 class="shop-card-title"><?= htmlspecialchars($item['title']) ?></h3>
-                        <p class="shop-card-desc"><?= htmlspecialchars($item['description']) ?></p>
-                        <?php $tags = array_filter(array_map('trim', explode(',', $item['tags']))); ?>
-                        <?php if ($tags): ?>
-                            <ul class="shop-tags">
-                                <?php foreach ($tags as $tag): ?>
-                                    <li><?= htmlspecialchars($tag) ?></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
-                        <div class="shop-card-footer">
-                            <span class="shop-price"><?= number_format((float) $item['price']) ?> <?= htmlspecialchars($shop['currency']) ?></span>
-                            <?php if ($item['product_type'] === 'external'): ?>
-                                <a
-                                    class="btn btn-outline btn-sm"
-                                    href="<?= htmlspecialchars($item['external_url']) ?>"
-                                    target="_blank"
-                                    rel="noopener nofollow"
-                                ><?= htmlspecialchars($shop['external_cta']) ?></a>
-                            <?php else: ?>
-                                <button
-                                    type="button"
-                                    class="btn btn-primary btn-sm add-to-cart-btn"
-                                    data-id="<?= (int) $item['id'] ?>"
-                                    data-added-text="<?= htmlspecialchars($shop['added_to_cart']) ?>"
-                                ><?= htmlspecialchars($shop['add_to_cart']) ?></button>
+                        <div class="shop-card-media">
+                            <?= icon('tag') ?>
+                            <span class="shop-badge<?= $isExternal ? ' shop-badge--external' : '' ?>"><?= htmlspecialchars($isExternal ? $shop['badge_external'] : $shop['badge_direct']) ?></span>
+                        </div>
+                        <div class="shop-card-body">
+                            <h3 class="shop-card-title"><?= htmlspecialchars($item['title']) ?></h3>
+                            <p class="shop-card-desc"><?= htmlspecialchars($item['description']) ?></p>
+                            <?php $tags = array_filter(array_map('trim', explode(',', $item['tags']))); ?>
+                            <?php if ($tags): ?>
+                                <ul class="shop-tags">
+                                    <?php foreach ($tags as $tag): ?>
+                                        <li><?= htmlspecialchars($tag) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
                             <?php endif; ?>
+                            <div class="shop-card-footer">
+                                <span class="shop-price"><?= number_format((float) $item['price']) ?> <?= htmlspecialchars($shop['currency']) ?></span>
+                                <?php if ($isExternal): ?>
+                                    <a
+                                        class="btn btn-outline btn-block"
+                                        href="<?= htmlspecialchars($item['external_url']) ?>"
+                                        target="_blank"
+                                        rel="noopener nofollow"
+                                    ><?= htmlspecialchars($shop['external_cta']) ?> <?= icon('external-link') ?></a>
+                                <?php else: ?>
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary btn-block add-to-cart-btn"
+                                        data-id="<?= (int) $item['id'] ?>"
+                                        data-added-text="<?= htmlspecialchars($shop['added_to_cart']) ?>"
+                                    ><?= htmlspecialchars($shop['add_to_cart']) ?></button>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>

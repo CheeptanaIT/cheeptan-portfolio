@@ -60,23 +60,36 @@ require __DIR__ . '/../includes/header.php';
             <div class="services-grid">
                 <?php foreach ($items as $i => $item): ?>
                     <div class="service-card reveal" style="--reveal-delay: <?= $i * 70 ?>ms">
-                        <div class="service-card-icon"><?= icon($item['icon']) ?></div>
-                        <h3 class="service-card-title"><?= htmlspecialchars($item['title']) ?></h3>
+                        <div class="service-card-head">
+                            <div class="service-card-icon"><?= icon($item['icon']) ?></div>
+                            <h3 class="service-card-title"><?= htmlspecialchars($item['title']) ?></h3>
+                        </div>
                         <p class="service-card-desc"><?= htmlspecialchars($item['description']) ?></p>
                         <?php $tags = array_filter(array_map('trim', explode(',', $item['tags']))); ?>
                         <?php if ($tags): ?>
                             <ul class="service-tags">
                                 <?php foreach ($tags as $tag): ?>
-                                    <li><?= htmlspecialchars($tag) ?></li>
+                                    <li><?= icon('check') ?><?= htmlspecialchars($tag) ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
                         <div class="service-card-footer">
-                            <span class="service-price"><?= htmlspecialchars($services['price_prefix']) ?> <?= htmlspecialchars($item['price']) ?></span>
-                            <a class="btn btn-primary btn-sm" href="index.php#contact"><?= htmlspecialchars($services['cta_label']) ?></a>
+                            <div class="service-price">
+                                <span class="service-price-prefix"><?= htmlspecialchars($services['price_prefix']) ?></span>
+                                <span class="service-price-value"><?= htmlspecialchars($item['price']) ?></span>
+                            </div>
+                            <a class="btn btn-primary btn-block" href="index.php#contact"><?= htmlspecialchars($services['cta_label']) ?></a>
                         </div>
                     </div>
                 <?php endforeach; ?>
+            </div>
+
+            <div class="service-cta reveal">
+                <div>
+                    <h3><?= htmlspecialchars($services['footer_cta_title']) ?></h3>
+                    <p><?= htmlspecialchars($services['footer_cta_text']) ?></p>
+                </div>
+                <a class="btn btn-outline" href="index.php#contact"><?= htmlspecialchars($services['footer_cta_label']) ?></a>
             </div>
         <?php endif; ?>
     </div>

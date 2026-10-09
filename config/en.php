@@ -138,7 +138,7 @@ return [
 
     'socials' => [
         ['label' => 'LinkedIn', 'icon' => 'linkedin', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlad-53944931b'],
-        ['label' => 'GitHub', 'icon' => 'github', 'url' => 'https://github.com/cheeptana'],
+        ['label' => 'GitHub', 'icon' => 'github', 'url' => 'https://github.com/CheeptanaIT'],
         ['label' => 'Email', 'icon' => 'mail', 'url' => 'mailto:Cheeptana.boy@gmail.com'],
     ],
 
@@ -270,6 +270,10 @@ return [
         'empty_state' => 'No posts yet — check back soon.',
         'error_state' => 'Unable to load posts right now. Please try again later.',
         'not_found' => 'Post not found.',
+        'latest_label' => 'Latest post',
+        'more_posts_title' => 'More posts',
+        'prev_post' => 'Previous post',
+        'next_post' => 'Next post',
     ],
 
     'services' => [
@@ -281,6 +285,10 @@ return [
         'cta_label' => 'Inquire / Hire',
         'error_state' => 'Unable to load services right now. Please try again later.',
         'empty_state' => 'No services available to book right now.',
+        'footer_cta_title' => 'Don\'t see what you need?',
+        'footer_cta_text' => 'Send me the details and I\'ll scope the work and quote a price.',
+        'footer_cta_label' => 'Get in touch',
+        'includes_label' => 'Includes',
         // Actual service listings live in the `services` MySQL table, edited via /admin/services.php
     ],
 
@@ -292,6 +300,8 @@ return [
         'add_to_cart' => 'Add to Cart',
         'added_to_cart' => 'Added ✓',
         'external_cta' => 'View on other store',
+        'badge_direct' => 'Sold here',
+        'badge_external' => 'External store',
         'currency' => 'THB',
         'error_state' => 'Unable to load products right now. Please try again later.',
         'empty_state' => 'No products for sale right now.',

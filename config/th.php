@@ -138,7 +138,7 @@ return [
 
     'socials' => [
         ['label' => 'LinkedIn', 'icon' => 'linkedin', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlad-53944931b'],
-        ['label' => 'GitHub', 'icon' => 'github', 'url' => 'https://github.com/cheeptana'],
+        ['label' => 'GitHub', 'icon' => 'github', 'url' => 'https://github.com/CheeptanaIT'],
         ['label' => 'Email', 'icon' => 'mail', 'url' => 'mailto:Cheeptana.boy@gmail.com'],
     ],
 
@@ -270,6 +270,10 @@ return [
         'empty_state' => 'ยังไม่มีบทความในตอนนี้ กลับมาดูใหม่เร็วๆ นี้',
         'error_state' => 'ไม่สามารถโหลดบทความได้ในขณะนี้ กรุณาลองใหม่ภายหลัง',
         'not_found' => 'ไม่พบบทความที่ต้องการ',
+        'latest_label' => 'บทความล่าสุด',
+        'more_posts_title' => 'บทความก่อนหน้า',
+        'prev_post' => 'บทความก่อนหน้า',
+        'next_post' => 'บทความถัดไป',
     ],
 
     'services' => [
@@ -281,6 +285,10 @@ return [
         'cta_label' => 'สอบถาม/จ้างงาน',
         'error_state' => 'ไม่สามารถโหลดบริการได้ในขณะนี้ กรุณาลองใหม่ภายหลัง',
         'empty_state' => 'ยังไม่มีบริการเปิดให้จองในตอนนี้',
+        'footer_cta_title' => 'ไม่เจอบริการที่ต้องการ?',
+        'footer_cta_text' => 'ส่งรายละเอียดงานมาได้เลย เดี๋ยวผมประเมินขอบเขตและราคาให้',
+        'footer_cta_label' => 'ติดต่อสอบถาม',
+        'includes_label' => 'รวม',
         // รายการบริการจริงอยู่ในตาราง `services` (MySQL) แก้ไขผ่าน /admin/services.php
     ],
 
@@ -292,6 +300,8 @@ return [
         'add_to_cart' => 'เพิ่มลงตะกร้า',
         'added_to_cart' => 'เพิ่มแล้ว ✓',
         'external_cta' => 'ดูสินค้าที่ร้านค้าอื่น',
+        'badge_direct' => 'ขายที่นี่',
+        'badge_external' => 'ร้านค้าภายนอก',
         'currency' => 'บาท',
         'error_state' => 'ไม่สามารถโหลดสินค้าได้ในขณะนี้ กรุณาลองใหม่ภายหลัง',
         'empty_state' => 'ยังไม่มีสินค้าวางขายในตอนนี้',

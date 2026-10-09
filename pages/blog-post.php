@@ -39,6 +39,31 @@ try {
     $dbError = true;
 }
 
+// บทความก่อนหน้า (เก่ากว่า) และถัดไป (ใหม่กว่า) สำหรับลิงก์นำทางท้ายบทความ
+$prevPost = null;
+$nextPost = null;
+if ($post && !$dbError) {
+    try {
+        $prevStmt = get_db()->prepare(
+            "SELECT slug, {$titleCol} AS title FROM blog_posts
+             WHERE status = 'published' AND published_at < :d
+             ORDER BY published_at DESC LIMIT 1"
+        );
+        $prevStmt->execute(['d' => $post['published_at']]);
+        $prevPost = $prevStmt->fetch() ?: null;
+
+        $nextStmt = get_db()->prepare(
+            "SELECT slug, {$titleCol} AS title FROM blog_posts
+             WHERE status = 'published' AND published_at > :d
+             ORDER BY published_at ASC LIMIT 1"
+        );
+        $nextStmt->execute(['d' => $post['published_at']]);
+        $nextPost = $nextStmt->fetch() ?: null;
+    } catch (PDOException $e) {
+        // ไม่ให้การนำทางทำให้หน้าบทความล่ม
+    }
+}
+
 if ($post) {
     $pageTitle = $post['title'] . ' — ' . $data['site_name'];
     $pageDescription = $post['excerpt'];
@@ -70,6 +95,22 @@ require __DIR__ . '/../includes/header.php';
             <article class="blog-post-content">
                 <?= nl2br(htmlspecialchars($post['content'])) ?>
             </article>
+            <?php if ($prevPost || $nextPost): ?>
+                <nav class="post-nav" aria-label="<?= htmlspecialchars($blog['back_to_list']) ?>">
+                    <?php if ($prevPost): ?>
+                        <a href="blog-post.php?slug=<?= urlencode($prevPost['slug']) ?>">
+                            <span>&larr; <?= htmlspecialchars($blog['prev_post']) ?></span>
+                            <?= htmlspecialchars($prevPost['title']) ?>
+                        </a>
+                    <?php endif; ?>
+                    <?php if ($nextPost): ?>
+                        <a class="post-nav-next" href="blog-post.php?slug=<?= urlencode($nextPost['slug']) ?>">
+                            <span><?= htmlspecialchars($blog['next_post']) ?> &rarr;</span>
+                            <?= htmlspecialchars($nextPost['title']) ?>
+                        </a>
+                    <?php endif; ?>
+                </nav>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </section>
