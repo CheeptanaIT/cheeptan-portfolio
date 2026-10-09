@@ -43,6 +43,11 @@ require __DIR__ . '/includes/header.php';
                 <?php endforeach; ?>
             </div>
         </div>
+        <div class="hero-photo-wrap">
+            <div class="hero-photo-frame">
+                <img src="assets/img/profile.jpg" alt="<?= htmlspecialchars($ui['photo_alt']) ?>">
+            </div>
+        </div>
     </div>
 </section>
 
@@ -215,12 +220,7 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <section id="about">
-    <div class="container about-grid">
-        <figure class="about-photo reveal">
-            <div class="about-photo-frame">
-                <img src="assets/img/profile.jpg" alt="<?= htmlspecialchars($ui['photo_alt']) ?>" loading="lazy">
-            </div>
-        </figure>
+    <div class="container">
         <div>
             <span class="section-eyebrow"><?= htmlspecialchars($ui['eyebrow_about']) ?></span>
             <h2 class="section-title"><?= htmlspecialchars($ui['about_title']) ?></h2>
