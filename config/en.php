@@ -9,33 +9,105 @@ return [
     'site_name' => 'Cheeptan Yenlad',
     'site_title' => 'Cheeptan Yenlad — IT Infrastructure & Operations Specialist',
 
+    // ---------------------------------------------------------------------
+    // Homepage order follows what each reader needs: Hero → TL;DR → Case Studies →
+    // Skills → Experience + Certs → About → Contact
+    // Empty fields ('' or []) hide that part of the page automatically — no placeholders shown
+    // ---------------------------------------------------------------------
+
     'hero' => [
         'name' => 'Cheeptan Yenlad',
         'name_th' => null,
         'role' => 'IT Infrastructure & System Specialist',
-        'tagline' => 'Managing Core Infrastructure, Virtualization, and Network Security for 200+ Enterprise Users with High Availability and Zero Unplanned Downtime.',
-        // Kept separate from the tagline above — the tagline can run as long as it wants on
-        // the page itself, but the meta description needs to stay ~120-160 characters per SEO
-        // convention (too long gets flagged, and Google may just truncate it mid-word in SERPs)
+        // One-line outcome statement
+        'tagline' => 'Running infrastructure, virtualization, and network security for 200+ users with zero unplanned downtime.',
+        // Kept separate from the tagline above — the meta description needs to stay ~120-160
+        // characters per SEO convention (too long gets flagged, and Google may truncate it)
         'meta_description' => 'Cheeptan Yenlad — IT Infrastructure & System Specialist. Managing Infrastructure, Virtualization, and Network Security for 200+ users, zero downtime.',
-        'badge' => '1+ Yr Experience',
-        'cta_primary' => 'View My Infrastructure Achievements',
-        'cta_secondary' => 'Contact Me',
-        'stats' => [
-            ['value' => '200+', 'label' => 'Enterprise Users Supported'],
-            ['value' => 'Zero', 'label' => 'Unplanned Downtime'],
-            ['value' => 'High', 'label' => 'Availability (HA)'],
+        // Drop the PDF at this path and the Download CV button appears (no file = button hidden)
+        'cv_file' => 'assets/cv/Cheeptan-Yenlad-CV.pdf',
+        'cta_cv' => 'Download CV',
+        'cta_cases' => 'View Case Studies',
+    ],
+
+    // TL;DR for HR — readable in 5 seconds
+    'tldr' => [
+        ['label' => 'Experience', 'value' => '1+ year', 'note' => 'IT Infrastructure & System Specialist'],
+        ['label' => 'Scale', 'value' => '200+ users', 'note' => 'Servers, network, AD, backup'],
+        // TODO: if you run a cloud platform in production (AWS / Azure / GCP), put it here
+        ['label' => 'Main platform', 'value' => 'VMware vSphere', 'note' => 'On-premise'],
+        ['label' => 'Open to', 'value' => 'Full-time', 'note' => 'Plus after-hours freelance in Bangkok'],
+    ],
+
+    // Case studies, Problem → Action → Result
+    // TODO: add real numbers to 'metrics' (VM count, uptime %, restore time…) and a sanitized
+    // diagram (no IPs/hostnames/company names) under assets/img/, then set its path in 'diagram'
+    'case_studies' => [
+        [
+            'id' => 'case-virtualization',
+            'title' => 'Server Availability on VMware vSphere',
+            'tags' => ['VMware vSphere', 'ESXi', 'IT Support'],
+            'problem' => 'Internal servers had to stay up for 200+ staff — if they went down, the whole company stopped.',
+            'action' => 'Ran all servers on VMware vSphere/ESXi while providing end-to-end IT support to users.',
+            'result' => 'Continuous availability with zero unplanned downtime.',
+            'metrics' => [
+                ['value' => '200+', 'label' => 'Users'],
+                ['value' => '0', 'label' => 'Unplanned downtime'],
+            ],
+            'diagram' => '',
+            'diagram_alt' => '',
+        ],
+        [
+            'id' => 'case-network',
+            'title' => 'Network Security with Fortinet',
+            'tags' => ['Fortinet', 'VLAN', 'Switch / AP'],
+            'problem' => 'The network needed to block unauthorized access and keep bandwidth allocation stable.',
+            'action' => 'Configured Fortinet Firewall policies, managed switches, and access points, with VLAN segmentation.',
+            'result' => 'Network access controlled by policy, with stable bandwidth allocation.',
+            'metrics' => [],
+            'diagram' => '',
+            'diagram_alt' => '',
+        ],
+        [
+            'id' => 'case-backup',
+            'title' => 'Backup & Disaster Recovery',
+            'tags' => ['Backup', 'NAS', 'Restore Test'],
+            'problem' => 'Critical company data could not be lost, and had to be restorable immediately in an emergency.',
+            'action' => 'Oversaw backup systems and NAS storage, regularly verifying data integrity and testing restores.',
+            'result' => 'Critical data ready to restore immediately when an incident hits.',
+            'metrics' => [],
+            'diagram' => '',
+            'diagram_alt' => '',
         ],
     ],
 
-    'about' => [
-        'text' => 'IT professional specializing in IT Infrastructure, Virtualization, and Network Security, with experience managing and maintaining IT systems supporting 200+ users. Focused on designing highly available systems, managing data security, and building Backup & Recovery processes so the business runs without interruption.',
-        'email' => 'Cheeptana.boy@gmail.com',
-        'phone' => '09X-XXX-XXXX',
-        'location' => 'Taling Chan, Bangkok, Thailand',
-        'company' => 'B.C.F. Grandwood Co., Ltd.',
-        'position' => 'IT Infrastructure & System Specialist',
-        'period' => 'May 2025 — Present',
+    // Two-tier skills — 'evidence' points to the case study that proves it ('' = no link)
+    'skills' => [
+        'core' => [
+            ['name' => 'VMware vSphere / ESXi', 'evidence' => '#case-virtualization'],
+            ['name' => 'Fortinet Firewall & Policy', 'evidence' => '#case-network'],
+            ['name' => 'VLAN, Managed Switch, Wireless AP', 'evidence' => '#case-network'],
+            ['name' => 'Backup & Recovery Testing', 'evidence' => '#case-backup'],
+            ['name' => 'NAS & Access Rights', 'evidence' => '#case-backup'],
+            ['name' => 'Active Directory & GPO', 'evidence' => ''],
+        ],
+        // TODO: skills you can use but don't have production proof for yet, e.g. ['Linux', 'PowerShell']
+        // (empty = column hidden)
+        'working' => [],
+    ],
+
+    'experience' => [
+        [
+            'role' => 'IT Infrastructure & System Specialist',
+            'company' => 'B.C.F. Grandwood Co., Ltd.',
+            'period' => 'May 2025 — Present',
+            'points' => [
+                'Run VMware-based servers and provide IT support for 200+ users',
+                'Manage Fortinet Firewalls, switches, access points, and VLANs',
+                'Design Active Directory Group Policy and organize access rights per company policy',
+                'Oversee backup / NAS storage and test restores',
+            ],
+        ],
     ],
 
     'education' => [
@@ -47,71 +119,35 @@ return [
         ],
     ],
 
-    'competencies' => [
-        [
-            'group' => 'Virtualization & Systems Administration',
-            'icon' => 'server',
-            'items' => [
-                'VMware vSphere / ESXi Management',
-                'Active Directory & Group Policy Objects (GPO) Management',
-                'User Lifecycle & Access Control Management',
-            ],
-        ],
-        [
-            'group' => 'Network & Security Infrastructure',
-            'icon' => 'shield',
-            'items' => [
-                'Fortinet Firewall Configuration & Policy Rules',
-                'Network Infrastructure (Managed Switches, Wireless Access Points)',
-                'VLAN Segmentation & Network Security',
-            ],
-        ],
-        [
-            'group' => 'Data Protection & Storage',
-            'icon' => 'database',
-            'items' => [
-                'Enterprise Backup Management & Recovery Testing',
-                'Network Attached Storage (NAS) Configuration & Access Rights',
-            ],
-        ],
-    ],
+    // TODO: certificates, e.g. ['name' => 'Fortinet NSE 4', 'issuer' => 'Fortinet', 'date' => '2025',
+    // 'verify_url' => 'https://...'] (empty = heading hidden)
+    'certifications' => [],
 
-    'banner' => [
-        'title' => 'Reliable Infrastructure, Built to Last',
-        'text' => 'Every system I manage is built for stability, security, and continuity — because downtime is not an option.',
-        'cta_label' => 'View Key Achievements',
-        'cta_link' => '#achievements',
-        'image_alt' => 'Server room and network equipment racks',
-    ],
-
-    'achievements' => [
-        [
-            'title' => 'User Infrastructure Support & System Availability',
-            'description' => 'Provide comprehensive IT support for 50-200 users while maintaining VMware-based servers for maximum uptime.',
+    'about' => [
+        'text' => 'Cheeptan Yenlad, an IT professional based in Taling Chan, Bangkok, keeping business IT running without interruption.',
+        // How I work, 3-4 lines
+        'principles' => [
+            'Design for failure first — build for high availability instead of firefighting.',
+            'A backup only counts if it restores — test recovery regularly.',
+            'Least privilege by default — control access with firewall policy and GPO.',
+            'Support people, not just systems — good infrastructure keeps users productive.',
         ],
-        [
-            'title' => 'Network Security & Fortinet Administration',
-            'description' => 'Manage and configure Fortinet Firewalls, switches, and access points to secure the network, prevent unauthorized access, and keep bandwidth allocation stable.',
-        ],
-        [
-            'title' => 'Identity & Access Management (IAM)',
-            'description' => 'Design and manage Group Policy (GPO) in Active Directory to strengthen client-machine security and organize employee access rights per company policy.',
-        ],
-        [
-            'title' => 'Data Disaster Recovery & Backup Strategy',
-            'description' => 'Oversee backup systems and NAS storage, regularly verifying data integrity to ensure critical company data is never lost and can be restored immediately in an emergency.',
-        ],
+        'email' => 'Cheeptana.boy@gmail.com',
+        'location' => 'Taling Chan, Bangkok, Thailand',
     ],
 
     'socials' => [
-        ['label' => 'LinkedIn', 'short' => 'in', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlad-53944931b'],
-        ['label' => 'GitHub', 'short' => 'gh', 'url' => 'https://github.com/cheeptana'],
+        ['label' => 'LinkedIn', 'icon' => 'linkedin', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlad-53944931b'],
+        ['label' => 'GitHub', 'icon' => 'github', 'url' => 'https://github.com/cheeptana'],
         ['label' => 'Email', 'icon' => 'mail', 'url' => 'mailto:Cheeptana.boy@gmail.com'],
     ],
 
-    'cta_strip' => [
+    'contact' => [
         'title' => 'Open to New Opportunities',
         'text' => "Interested in working together or talking about IT Infrastructure? Let's connect.",
+        // TODO: booking link, e.g. a Calendly / Google Calendar booking page ('' = button hidden)
+        'booking_url' => '',
+        'booking_label' => 'Book a 15-min call',
     ],
 
     'footer_about' => 'IT Infrastructure & System Specialist keeping systems stable, secure, and always available.',
@@ -127,22 +163,33 @@ return [
         'nav_contact' => 'Contact',
         'nav_toggle_label' => 'Open menu',
 
-        'eyebrow_about' => '01 — About',
-        'eyebrow_education' => '02 — Education & Certifications',
-        'eyebrow_competencies' => '03 — Competencies',
-        'eyebrow_achievements' => '04 — Achievements',
+        'eyebrow_case_studies' => '01 — Case Studies',
+        'eyebrow_skills' => '02 — Skills',
+        'eyebrow_experience' => '03 — Experience',
+        'eyebrow_about' => '04 — About',
         'eyebrow_contact' => '05 — Contact',
 
-        'about_title' => 'About Me',
-        'education_title' => 'Education & Certifications',
-        'about_label_position' => 'Current Position',
-        'about_label_company' => 'Company',
+        'tldr_title' => 'At a glance',
+        'case_studies_title' => 'Work I\'ve Delivered',
+        'case_label_problem' => 'Problem',
+        'case_label_action' => 'Action',
+        'case_label_result' => 'Result',
+        'skills_title' => 'Skills',
+        'skills_core_title' => 'Core',
+        'skills_core_hint' => 'Used in production, backed by a case study',
+        'skills_working_title' => 'Working knowledge',
+        'skills_working_hint' => 'Hands-on, still growing',
+        'skills_evidence_label' => 'See proof',
+        'experience_title' => 'Experience & Certifications',
+        'experience_work_title' => 'Work',
+        'experience_education_title' => 'Education',
+        'experience_certs_title' => 'Certifications',
+        'cert_verify_label' => 'Verify',
+        'about_title' => 'How I Work',
+        'photo_alt' => 'Profile photo of Cheeptan Yenlad',
         'about_label_email' => 'Email',
-        'about_label_phone' => 'Phone',
         'about_label_location' => 'Location',
-
-        'competencies_title' => 'Core Infrastructure Competencies',
-        'achievements_title' => 'Key Achievements & Impact',
+        'hero_socials_label' => 'Find me online',
 
         'form_label_name' => 'Name',
         'form_label_email' => 'Email',

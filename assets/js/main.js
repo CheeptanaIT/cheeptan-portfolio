@@ -1,3 +1,6 @@
+// ใส่ class js ก่อนทุกอย่าง เพื่อให้ CSS ซ่อน .reveal เฉพาะตอน JS ทำงาน
+document.documentElement.classList.add('js');
+
 document.addEventListener('DOMContentLoaded', function () {
     var toggle = document.querySelector('.nav-toggle');
     var links = document.querySelector('.nav-links');

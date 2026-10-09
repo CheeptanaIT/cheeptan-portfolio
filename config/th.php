@@ -9,33 +9,104 @@ return [
     'site_name' => 'Cheeptan Yenlad',
     'site_title' => 'Cheeptan Yenlad — IT Infrastructure & Operations Specialist',
 
+    // ---------------------------------------------------------------------
+    // หน้าแรกเรียงตามลำดับที่คนอ่านต้องการ: Hero → TL;DR → Case Studies → Skills →
+    // Experience + Certs → About → Contact
+    // ช่องที่เว้นว่าง ('' หรือ []) หน้าเว็บจะซ่อนส่วนนั้นให้อัตโนมัติ — ไม่โชว์ placeholder
+    // ---------------------------------------------------------------------
+
     'hero' => [
         'name' => 'Cheeptan Yenlad',
         'name_th' => 'นายชีพธนา เย็นลับ',
         'role' => 'IT Infrastructure & System Specialist',
-        'tagline' => 'ดูแลระบบ Infrastructure หลัก, Virtualization และ Network Security ให้ผู้ใช้งานกว่า 200 คน ด้วยความเสถียรสูงและไม่มี Downtime ที่ไม่ได้วางแผนไว้',
-        // ใช้แยกจาก tagline ข้างบนโดยเฉพาะ — tagline ยาวเต็มที่ไว้โชว์บนหน้าเว็บได้ แต่
-        // meta description ต้องกระชับ ~120-160 ตัวอักษรตามมาตรฐาน SEO (ยาวไปจะโดน flag ว่า
-        // "too long" และ Google อาจตัดกลางคำตอนแสดงผลใน SERP)
+        // ประโยคผลลัพธ์ 1 บรรทัด
+        'tagline' => 'ดูแล Infrastructure, Virtualization และ Network Security ให้ผู้ใช้งาน 200+ คน โดยไม่มี Downtime ที่ไม่ได้วางแผนไว้',
+        // ใช้แยกจาก tagline ข้างบนโดยเฉพาะ — meta description ต้องกระชับ ~120-160 ตัวอักษร
+        // ตามมาตรฐาน SEO (ยาวไปจะโดน flag ว่า "too long" และ Google อาจตัดกลางคำใน SERP)
         'meta_description' => 'ชีพธนา เย็นลับ — IT Infrastructure & System Specialist ประจำตลิ่งชัน ราชพฤกษ์ กรุงเทพฯ ดูแลระบบ Infrastructure, Network Security ให้ผู้ใช้งาน 200+ คน',
-        'badge' => '1+ ปีประสบการณ์',
-        'cta_primary' => 'ดูผลงานด้าน Infrastructure',
-        'cta_secondary' => 'ติดต่อฉัน',
-        'stats' => [
-            ['value' => '200+', 'label' => 'ผู้ใช้งานที่ดูแล'],
-            ['value' => 'Zero', 'label' => 'Downtime ที่ไม่ได้วางแผน'],
-            ['value' => 'High', 'label' => 'Availability (HA)'],
+        // วางไฟล์ PDF ไว้ที่ path นี้แล้วปุ่ม Download CV จะขึ้นเอง (ไม่มีไฟล์ = ซ่อนปุ่ม)
+        'cv_file' => 'assets/cv/Cheeptan-Yenlad-CV.pdf',
+        'cta_cv' => 'ดาวน์โหลด CV',
+        'cta_cases' => 'ดู Case Studies',
+    ],
+
+    // TL;DR สำหรับ HR — อ่านจบใน 5 วินาที
+    'tldr' => [
+        ['label' => 'ประสบการณ์', 'value' => '1+ ปี', 'note' => 'IT Infrastructure & System Specialist'],
+        ['label' => 'สเกลระบบที่ดูแล', 'value' => '200+ ผู้ใช้', 'note' => 'Server, Network, AD, Backup'],
+        // TODO: ถ้ามี cloud ที่ใช้งานจริง (AWS / Azure / GCP) ใส่แทนหรือเพิ่มตรงนี้
+        ['label' => 'แพลตฟอร์มหลัก', 'value' => 'VMware vSphere', 'note' => 'On-premise'],
+        ['label' => 'รูปแบบงานที่รับ', 'value' => 'Full-time', 'note' => 'รับ Freelance นอกเวลา ตลิ่งชัน/กรุงเทพฯ'],
+    ],
+
+    // Case Studies แบบ Problem → Action → Result
+    // TODO: เติมตัวเลขจริงใน 'metrics' (เช่น จำนวน VM, uptime %, เวลา restore) และ diagram
+    // ที่ sanitize แล้ว (ลบ IP/hostname/ชื่อบริษัท) วางไว้ใน assets/img/ แล้วใส่ path ที่ 'diagram'
+    'case_studies' => [
+        [
+            'id' => 'case-virtualization',
+            'title' => 'Server Availability บน VMware vSphere',
+            'tags' => ['VMware vSphere', 'ESXi', 'IT Support'],
+            'problem' => 'Server ภายในต้องพร้อมใช้งานตลอดเวลาสำหรับพนักงาน 200+ คน ถ้าระบบล่ม งานทั้งองค์กรหยุดตาม',
+            'action' => 'ดูแล Server ทั้งหมดบน VMware vSphere/ESXi ควบคู่กับให้ IT support ผู้ใช้งานแบบครบวงจร',
+            'result' => 'ระบบพร้อมใช้งานต่อเนื่อง ไม่มี Downtime ที่ไม่ได้วางแผนไว้',
+            'metrics' => [
+                ['value' => '200+', 'label' => 'ผู้ใช้งาน'],
+                ['value' => '0', 'label' => 'Unplanned downtime'],
+            ],
+            'diagram' => '',
+            'diagram_alt' => '',
+        ],
+        [
+            'id' => 'case-network',
+            'title' => 'Network Security ด้วย Fortinet',
+            'tags' => ['Fortinet', 'VLAN', 'Switch / AP'],
+            'problem' => 'เครือข่ายต้องกันการเข้าถึงที่ไม่ได้รับอนุญาต และต้องจัดสรร Bandwidth ให้เสถียร',
+            'action' => 'ตั้งค่า Fortinet Firewall policy, Managed Switch และ Access Point พร้อมแบ่ง VLAN แยกส่วนเครือข่าย',
+            'result' => 'ควบคุมการเข้าถึงเครือข่ายตาม policy และจัดสรร Bandwidth ได้เสถียร',
+            'metrics' => [],
+            'diagram' => '',
+            'diagram_alt' => '',
+        ],
+        [
+            'id' => 'case-backup',
+            'title' => 'Backup & Disaster Recovery',
+            'tags' => ['Backup', 'NAS', 'Restore Test'],
+            'problem' => 'ข้อมูลสำคัญขององค์กรต้องไม่สูญหาย และต้องกู้คืนได้ทันทีเมื่อเกิดเหตุฉุกเฉิน',
+            'action' => 'ควบคุมดูแลระบบ Backup และ NAS ตรวจสอบความถูกต้องของข้อมูลและทดสอบ Restore อย่างสม่ำเสมอ',
+            'result' => 'ข้อมูลสำคัญพร้อม Restore ได้ทันทีเมื่อเกิดเหตุ',
+            'metrics' => [],
+            'diagram' => '',
+            'diagram_alt' => '',
         ],
     ],
 
-    'about' => [
-        'text' => 'ชีพธนา เย็นลับ (Cheeptan Yenlad) IT Professional ประจำอยู่ที่ตลิ่งชัน ราชพฤกษ์ กรุงเทพฯ ที่มีความเชี่ยวชาญด้าน IT Infrastructure, Virtualization และ Network Security มีประสบการณ์ดูแลและบริหารจัดการระบบไอทีให้รองรับผู้ใช้งานมากกว่า 200 ราย มุ่งเน้นการออกแบบระบบที่มีความเสถียร (High Availability) การบริหารจัดการความปลอดภัยของข้อมูล และการจัดทำระบบ Backup & Recovery เพื่อให้ธุรกิจดำเนินได้อย่างต่อเนื่องไม่มีสะดุด',
-        'email' => 'Cheeptana.boy@gmail.com',
-        'phone' => '096-770-7287',
-        'location' => 'ตลิ่งชัน กรุงเทพฯ, ประเทศไทย',
-        'company' => 'บจก. บี.ซี.เอฟ. แกรนด์วู้ด',
-        'position' => 'IT Infrastructure & System Specialist',
-        'period' => 'พฤษภาคม 2568 — ปัจจุบัน',
+    // Skills 2 ชั้น — 'evidence' ชี้ไปที่ case study ที่พิสูจน์ skill นั้น ('' = ไม่มีลิงก์)
+    'skills' => [
+        'core' => [
+            ['name' => 'VMware vSphere / ESXi', 'evidence' => '#case-virtualization'],
+            ['name' => 'Fortinet Firewall & Policy', 'evidence' => '#case-network'],
+            ['name' => 'VLAN, Managed Switch, Wireless AP', 'evidence' => '#case-network'],
+            ['name' => 'Backup & Recovery Testing', 'evidence' => '#case-backup'],
+            ['name' => 'NAS & Access Rights', 'evidence' => '#case-backup'],
+            ['name' => 'Active Directory & GPO', 'evidence' => ''],
+        ],
+        // TODO: skill ที่ใช้เป็นแต่ยังไม่มีงานจริงรองรับ เช่น ['Linux', 'PowerShell'] (ว่าง = ซ่อนคอลัมน์)
+        'working' => [],
+    ],
+
+    'experience' => [
+        [
+            'role' => 'IT Infrastructure & System Specialist',
+            'company' => 'บจก. บี.ซี.เอฟ. แกรนด์วู้ด',
+            'period' => 'พฤษภาคม 2568 — ปัจจุบัน',
+            'points' => [
+                'ดูแล Server บน VMware และให้ IT support ผู้ใช้งาน 200+ คน',
+                'ดูแล Fortinet Firewall, Switch, Access Point และ VLAN',
+                'ออกแบบ Group Policy บน Active Directory และจัดสิทธิ์ผู้ใช้ตามนโยบายบริษัท',
+                'ดูแลระบบ Backup / NAS และทดสอบ Restore',
+            ],
+        ],
     ],
 
     'education' => [
@@ -47,71 +118,36 @@ return [
         ]
     ],
 
-    'competencies' => [
-        [
-            'group' => 'Virtualization & Systems Administration',
-            'icon' => 'server',
-            'items' => [
-                'VMware vSphere / ESXi Management',
-                'Active Directory & Group Policy Objects (GPO) Management',
-                'User Lifecycle & Access Control Management',
-            ],
-        ],
-        [
-            'group' => 'Network & Security Infrastructure',
-            'icon' => 'shield',
-            'items' => [
-                'Fortinet Firewall Configuration & Policy Rules',
-                'Network Infrastructure (Managed Switches, Wireless Access Points)',
-                'VLAN Segmentation & Network Security',
-            ],
-        ],
-        [
-            'group' => 'Data Protection & Storage',
-            'icon' => 'database',
-            'items' => [
-                'Enterprise Backup Management & Recovery Testing',
-                'Network Attached Storage (NAS) Configuration & Access Rights',
-            ],
-        ],
-    ],
+    // TODO: ใบรับรอง เช่น ['name' => 'Fortinet NSE 4', 'issuer' => 'Fortinet', 'date' => '2025',
+    // 'verify_url' => 'https://...'] (ว่าง = ซ่อนหัวข้อ)
+    'certifications' => [],
 
-    'banner' => [
-        'title' => 'Reliable Infrastructure, Built to Last',
-        'text' => 'ทุกระบบที่ผมดูแลถูกออกแบบมาเพื่อความมั่นคง ปลอดภัย และต่อเนื่อง เพราะ Downtime ไม่ใช่ทางเลือก',
-        'cta_label' => 'ดูผลงานเด่น',
-        'cta_link' => '#achievements',
-        'image_alt' => 'ห้อง Server และ Rack อุปกรณ์เครือข่าย',
-    ],
-
-    'achievements' => [
-        [
-            'title' => 'User Infrastructure Support & System Availability',
-            'description' => 'บริหารจัดการและให้การสนับสนุนด้านไอทีอย่างครอบคลุมสำหรับผู้ใช้งาน 50-200 คน ควบคู่กับการดูแลระบบ Server บน VMware ให้มี uptime สูงสุด',
+    'about' => [
+        // ประโยคแรกคงชื่อไทย/อังกฤษ + ตลิ่งชัน ราชพฤกษ์ ไว้เพื่อ SEO
+        'text' => 'ชีพธนา เย็นลับ (Cheeptan Yenlad) IT Professional ประจำอยู่ที่ตลิ่งชัน ราชพฤกษ์ กรุงเทพฯ ดูแลระบบไอทีให้ธุรกิจเดินต่อได้ไม่สะดุด',
+        // วิธีทำงาน 3-4 บรรทัด
+        'principles' => [
+            'ออกแบบเผื่อระบบล่มไว้ก่อน — เน้น High Availability ไม่รอแก้ตอนพัง',
+            'Backup ต้องกู้คืนได้จริง — ทดสอบ Restore สม่ำเสมอ ไม่ใช่แค่สำรองไว้',
+            'ให้สิทธิ์เท่าที่จำเป็น — คุมการเข้าถึงด้วย Firewall policy และ GPO',
+            'ดูแลผู้ใช้ไปพร้อมระบบ — Infrastructure ดีต้องทำให้คนทำงานได้ลื่น',
         ],
-        [
-            'title' => 'Network Security & Fortinet Administration',
-            'description' => 'ดูแลและตั้งค่า Fortinet Firewall, Switch และ Access Point เพื่อควบคุมความปลอดภัยของเครือข่าย ป้องกันการเข้าถึงที่ไม่ได้รับอนุญาต และจัดสรร Bandwidth ให้เสถียร',
-        ],
-        [
-            'title' => 'Identity & Access Management (IAM)',
-            'description' => 'ออกแบบและบริหารจัดการ Group Policy (GPO) บน Active Directory เพื่อยกระดับความปลอดภัยของเครื่อง Client และจัดระเบียบสิทธิ์การใช้งานของพนักงานตามนโยบายบริษัท',
-        ],
-        [
-            'title' => 'Data Disaster Recovery & Backup Strategy',
-            'description' => 'ควบคุมดูแลระบบสำรองข้อมูล (Backup System) และ NAS พร้อมตรวจสอบความถูกต้องของข้อมูลอย่างสม่ำเสมอ เพื่อรับประกันว่าข้อมูลสำคัญขององค์กรจะไม่สูญหายและสามารถ Restore ได้ทันทีเมื่อเกิดเหตุฉุกเฉิน',
-        ],
+        'email' => 'Cheeptana.boy@gmail.com',
+        'location' => 'ตลิ่งชัน กรุงเทพฯ, ประเทศไทย',
     ],
 
     'socials' => [
-        ['label' => 'LinkedIn', 'short' => 'in', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlab-53944931b'],
-        ['label' => 'GitHub', 'short' => 'gh', 'url' => 'https://github.com/cheeptana'],
+        ['label' => 'LinkedIn', 'icon' => 'linkedin', 'url' => 'https://www.linkedin.com/in/cheeptana-yenlad-53944931b'],
+        ['label' => 'GitHub', 'icon' => 'github', 'url' => 'https://github.com/cheeptana'],
         ['label' => 'Email', 'icon' => 'mail', 'url' => 'mailto:Cheeptana.boy@gmail.com'],
     ],
 
-    'cta_strip' => [
+    'contact' => [
         'title' => 'เปิดรับโอกาสใหม่ๆ',
         'text' => 'สนใจร่วมงานหรือพูดคุยเรื่อง IT Infrastructure ติดต่อผมได้เลยครับ',
+        // TODO: ลิงก์นัดคุย เช่น Calendly / Google Calendar booking page ('' = ซ่อนปุ่ม)
+        'booking_url' => '',
+        'booking_label' => 'นัดคุย 15 นาที',
     ],
 
     'footer_about' => 'IT Infrastructure & System Specialist ดูแลระบบให้มั่นคง ปลอดภัย และพร้อมใช้งานต่อเนื่อง',
@@ -127,22 +163,33 @@ return [
         'nav_contact' => 'ติดต่อ',
         'nav_toggle_label' => 'เปิดเมนู',
 
-        'eyebrow_about' => '01 — เกี่ยวกับ',
-        'eyebrow_education' => '02 — การศึกษาและใบรับรอง',
-        'eyebrow_competencies' => '03 — ความเชี่ยวชาญ',
-        'eyebrow_achievements' => '04 — ผลงาน',
+        'eyebrow_case_studies' => '01 — Case Studies',
+        'eyebrow_skills' => '02 — Skills',
+        'eyebrow_experience' => '03 — ประสบการณ์',
+        'eyebrow_about' => '04 — เกี่ยวกับ',
         'eyebrow_contact' => '05 — ติดต่อ',
 
-        'about_title' => 'เกี่ยวกับฉัน',
-        'education_title' => 'การศึกษาและใบรับรอง',
-        'about_label_position' => 'ตำแหน่งปัจจุบัน',
-        'about_label_company' => 'บริษัท',
+        'tldr_title' => 'สรุปสั้นๆ',
+        'case_studies_title' => 'งานจริงที่ลงมือทำ',
+        'case_label_problem' => 'ปัญหา',
+        'case_label_action' => 'สิ่งที่ทำ',
+        'case_label_result' => 'ผลลัพธ์',
+        'skills_title' => 'ทักษะ',
+        'skills_core_title' => 'Core',
+        'skills_core_hint' => 'ใช้ในงานจริง มี Case Study รองรับ',
+        'skills_working_title' => 'Working knowledge',
+        'skills_working_hint' => 'ใช้งานได้ กำลังต่อยอด',
+        'skills_evidence_label' => 'ดูหลักฐาน',
+        'experience_title' => 'ประสบการณ์และใบรับรอง',
+        'experience_work_title' => 'การทำงาน',
+        'experience_education_title' => 'การศึกษา',
+        'experience_certs_title' => 'ใบรับรอง',
+        'cert_verify_label' => 'ตรวจสอบ',
+        'about_title' => 'วิธีทำงานของผม',
+        'photo_alt' => 'รูปโปรไฟล์ ชีพธนา เย็นลับ',
         'about_label_email' => 'อีเมล',
-        'about_label_phone' => 'โทรศัพท์',
         'about_label_location' => 'ที่อยู่',
-
-        'competencies_title' => 'ความเชี่ยวชาญด้านโครงสร้างพื้นฐาน',
-        'achievements_title' => 'ผลงานและผลกระทบที่โดดเด่น',
+        'hero_socials_label' => 'ช่องทางติดตาม',
 
         'form_label_name' => 'ชื่อ',
         'form_label_email' => 'อีเมล',

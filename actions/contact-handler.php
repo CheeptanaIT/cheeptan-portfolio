@@ -11,6 +11,7 @@ $messages = [
         'invalid_email' => 'รูปแบบอีเมลไม่ถูกต้อง',
         'success' => 'ส่งข้อความเรียบร้อยแล้ว ขอบคุณที่ติดต่อมา',
         'send_failed' => 'ไม่สามารถส่งข้อความได้ในขณะนี้ กรุณาลองใหม่ภายหลัง',
+        'spam' => 'ไม่สามารถส่งข้อความได้ กรุณาลองส่งอีกครั้ง',
     ],
     'en' => [
         'bad_method' => 'Invalid request method',
@@ -19,6 +20,7 @@ $messages = [
         'invalid_email' => 'Invalid email format',
         'success' => 'Your message has been sent. Thank you for reaching out',
         'send_failed' => 'Unable to send your message right now. Please try again later',
+        'spam' => 'Message could not be sent. Please try again',
     ],
 ];
 
@@ -38,6 +40,21 @@ function clean_field(string $value): string
     // ป้องกัน header injection: ตัดขึ้นบรรทัดใหม่ออกจากค่าที่จะใช้ในหัวอีเมล
     $value = str_replace(["\r", "\n"], '', $value);
     return trim($value);
+}
+
+// กันสแปม 2 ชั้น: (1) honeypot — ช่องซ่อนที่คนไม่เห็นจึงต้องว่างเสมอ
+// (2) เวลาที่ใช้กรอก — form_ts ถูกฝังตอนเรนเดอร์หน้า ต้องผ่านไปอย่างน้อย 3 วินาที
+if (($_POST['hp_website'] ?? '') !== '') {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => $m['spam']]);
+    exit;
+}
+
+$formTs = (int) ($_POST['form_ts'] ?? 0);
+if ($formTs <= 0 || $formTs > time() || time() - $formTs < 3) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => $m['spam']]);
+    exit;
 }
 
 $name = clean_field($_POST['name'] ?? '');
